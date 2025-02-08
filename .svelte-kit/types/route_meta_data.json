@@ -1,0 +1,13 @@
+{
+	"/(dashboard)": [],
+	"/": [],
+	"/(dashboard)/dashboard": [],
+	"/(dashboard)/dashboard/account": [],
+	"/(dashboard)/dashboard/customers": [],
+	"/(dashboard)/dashboard/discounts": [],
+	"/(dashboard)/dashboard/finances": [],
+	"/(dashboard)/dashboard/insights": [],
+	"/(dashboard)/dashboard/orders": [],
+	"/(dashboard)/dashboard/products": [],
+	"/(dashboard)/dashboard/settings": []
+}
