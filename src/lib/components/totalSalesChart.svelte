@@ -1,97 +1,110 @@
 <script>
-  import { onMount, onDestroy } from 'svelte';
-  import { browser } from '$app/environment';
-    let chart;
-    let options = {
-  chart: {
-    maxHeight: "100%",
-    maxWidth: "100%",
-    type: "area",
-    fontFamily: "Inter, sans-serif",
-    dropShadow: {
-      enabled: false,
-    },
-    toolbar: {
-      show: false,
-    },
+    import { onMount, onDestroy } from 'svelte';
+    import { browser } from '$app/environment';
+      let chart;
+      let options = {
+// add data series via arrays, learn more here: https://apexcharts.com/docs/series/
+series: [
+  {
+    name: "Developer Edition",
+    data: [1500, 1418, 1456, 1526, 1356, 1256],
+    color: "#1A56DB",
   },
-  tooltip: {
-    enabled: true,
-    x: {
-      show: false,
-    },
+  {
+    name: "Designer Edition",
+    data: [643, 413, 765, 412, 1423, 1731],
+    color: "#7E3BF2",
   },
-  fill: {
-    type: "gradient",
-    gradient: {
-      opacityFrom: 0.55,
-      opacityTo: 0,
-      shade: "#1C64F2",
-      gradientToColors: ["#1C64F2"],
-    },
-  },
-  dataLabels: {
+],
+chart: {
+  maxHeight: "100%",
+  maxWidth: "100%",
+  type: "area",
+  fontFamily: "Inter, sans-serif",
+  dropShadow: {
     enabled: false,
   },
-  stroke: {
-    width: 6,
-  },
-  grid: {
-    show: false,
-    strokeDashArray: 4,
-    padding: {
-      left: 2,
-      right: 2,
-      top: 0
-    },
-  },
-  series: [
-    {
-      name: "New users",
-      data: [6500, 6418, 6456, 6526, 6356, 6456],
-      color: "#1A56DB",
-    },
-  ],
-  xaxis: {
-    categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
-    labels: {
-      show: false,
-    },
-    axisBorder: {
-      show: false,
-    },
-    axisTicks: {
-      show: false,
-    },
-  },
-  yaxis: {
+  toolbar: {
     show: false,
   },
-  zoom: {
+},
+tooltip: {
+  enabled: true,
+  x: {
+    show: false,
+  },
+},
+legend: {
+  show: false
+},
+fill: {
+  type: "gradient",
+  gradient: {
+    opacityFrom: 0.55,
+    opacityTo: 0,
+    shade: "#1C64F2",
+    gradientToColors: ["#1C64F2"],
+  },
+},
+dataLabels: {
+  enabled: false,
+},
+stroke: {
+  width: 6,
+},
+grid: {
+  show: false,
+  strokeDashArray: 4,
+  padding: {
+    left: 2,
+    right: 2,
+    top: 0
+  },
+},
+xaxis: {
+  categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
+  labels: {
+    show: false,
+  },
+  axisBorder: {
+    show: false,
+  },
+  axisTicks: {
+    show: false,
+  },
+},
+yaxis: {
+  show: false,
+  labels: {
+    formatter: function (value) {
+      return '$' + value;
+    }
+  }
+},
+zoom: {
     enabled: false,
     allowMouseWheelZoom: false,
-}
-};
-  onMount(async () => {
-    if (browser) {
-    const ApexCharts = (await import('apexcharts')).default;
-      const chartElement = document.getElementById('totalUsersChart');
-      chart = new ApexCharts(chartElement, options);
-      await chart.render();
-    }
-  });
-
-  // Cleanup on destroy
-  onDestroy(() => {
-    if (chart) chart.destroy();
-  });
-</script> 
+}}
+    onMount(async () => {
+      if (browser) {
+      const ApexCharts = (await import('apexcharts')).default;
+        const chartElement = document.getElementById('totalSalesChart');
+        chart = new ApexCharts(chartElement, options);
+        await chart.render();
+      }
+    });
+  
+    // Cleanup on destroy
+    onDestroy(() => {
+      if (chart) chart.destroy();
+    });
+</script>
 
 <div class="w-full h-[52vh] rounded-xl shadow-xl bg-base-200 p-4 md:p-6 border border-base-300">
     <div class="flex justify-between">
       <div>
-        <h5 class="leading-none text-3xl font-bold text-white pb-2">5.4k new clients</h5>
-        <p class="text-base font-normal text-gray-400">Client Rate</p>
+        <h5 class="leading-none text-3xl font-bold text-white pb-2">32.4k Users | 8k Sales</h5>
+        <p class="text-base font-normal text-gray-400">Conversion Rate</p>
       </div>
       <!-- TODO: Arrow up arrow down system -->
       <div
@@ -103,7 +116,7 @@
       </div>
     </div>
     {#if browser}
-        <div id="totalUsersChart"></div>
+        <div id="totalSalesChart"></div>
     {/if}
     <div class="grid grid-cols-1 items-center border-t border-base-300 justify-between">
       <div class="flex justify-between items-center pt-5">
@@ -150,4 +163,3 @@
       </div>
     </div>
   </div>
-  

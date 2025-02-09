@@ -53,6 +53,10 @@
     "vite": "^6.0.0"
   },
   "dependencies": {
+    "@ag-grid-community/client-side-row-model": "^32.3.3",
+    "@ag-grid-community/core": "^32.3.3",
+    "@ag-grid-community/styles": "^33.0.3",
+    "ag-grid-community": "^32.3.3",
     "apexcharts": "^4.4.0"
   }
 }

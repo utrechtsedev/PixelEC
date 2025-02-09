@@ -18,7 +18,7 @@ export const nodes = [
 export const server_loads = [];
 
 export const dictionary = {
-		"/(dashboard)/dashboard": [3,[2]],
+		"/(dashboard)/dashboard": [~3,[2]],
 		"/(dashboard)/dashboard/account": [4,[2]],
 		"/(dashboard)/dashboard/customers": [5,[2]],
 		"/(dashboard)/dashboard/discounts": [6,[2]],

@@ -1,97 +1,81 @@
 <script>
-  import { onMount, onDestroy } from 'svelte';
-  import { browser } from '$app/environment';
-    let chart;
-    let options = {
-  chart: {
-    maxHeight: "100%",
-    maxWidth: "100%",
-    type: "area",
-    fontFamily: "Inter, sans-serif",
-    dropShadow: {
-      enabled: false,
+    import { onMount, onDestroy } from 'svelte';
+    import { browser } from '$app/environment';
+      let chart;
+      let options = {   series: [52.8, 26.8, 20.4],
+    colors: ["#1C64F2", "#16BDCA", "#9061F9"],
+    chart: {
+      height: "65%",
+      width: "100%",
+      type: "pie",
     },
-    toolbar: {
-      show: false,
+    stroke: {
+      colors: ["white"],
+      lineCap: "",
     },
-  },
-  tooltip: {
-    enabled: true,
-    x: {
-      show: false,
+    plotOptions: {
+      pie: {
+        labels: {
+          show: true,
+        },
+        size: "100%",
+        dataLabels: {
+          offset: -25
+        }
+      },
     },
-  },
-  fill: {
-    type: "gradient",
-    gradient: {
-      opacityFrom: 0.55,
-      opacityTo: 0,
-      shade: "#1C64F2",
-      gradientToColors: ["#1C64F2"],
+    labels: ["Direct", "Organic search", "Referrals"],
+    dataLabels: {
+      enabled: true,
+      style: {
+        fontFamily: "Inter, sans-serif",
+      },
     },
-  },
-  dataLabels: {
-    enabled: false,
-  },
-  stroke: {
-    width: 6,
-  },
-  grid: {
-    show: false,
-    strokeDashArray: 4,
-    padding: {
-      left: 2,
-      right: 2,
-      top: 0
+    legend: {
+      position: "bottom",
+      fontFamily: "Inter, sans-serif",
     },
-  },
-  series: [
-    {
-      name: "New users",
-      data: [6500, 6418, 6456, 6526, 6356, 6456],
-      color: "#1A56DB",
+    yaxis: {
+      labels: {
+        formatter: function (value) {
+          return value + "%"
+        },
+      },
     },
-  ],
-  xaxis: {
-    categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
-    labels: {
-      show: false,
+    xaxis: {
+      labels: {
+        formatter: function (value) {
+          return value  + "%"
+        },
+      },
+      axisTicks: {
+        show: false,
+      },
+      axisBorder: {
+        show: false,
+      },
     },
-    axisBorder: {
-      show: false,
-    },
-    axisTicks: {
-      show: false,
-    },
-  },
-  yaxis: {
-    show: false,
-  },
-  zoom: {
-    enabled: false,
-    allowMouseWheelZoom: false,
-}
-};
-  onMount(async () => {
-    if (browser) {
-    const ApexCharts = (await import('apexcharts')).default;
-      const chartElement = document.getElementById('totalUsersChart');
-      chart = new ApexCharts(chartElement, options);
-      await chart.render();
-    }
-  });
+  }
+    onMount(async () => {
+      if (browser) {
+      const ApexCharts = (await import('apexcharts')).default;
+        const chartElement = document.getElementById('profitExpenseChart');
+        chart = new ApexCharts(chartElement, options);
+        await chart.render();
+      }
+    });
+  
+    // Cleanup on destroy
+    onDestroy(() => {
+      if (chart) chart.destroy();
+    });
+</script>
 
-  // Cleanup on destroy
-  onDestroy(() => {
-    if (chart) chart.destroy();
-  });
-</script> 
-
-<div class="w-full h-[52vh] rounded-xl shadow-xl bg-base-200 p-4 md:p-6 border border-base-300">
+<div class="w-full md:h-[52vh] h-[59vh] rounded-xl shadow-xl bg-base-200 p-4 md:p-6 border border-base-300">
     <div class="flex justify-between">
       <div>
-        <h5 class="leading-none text-3xl font-bold text-white pb-2">5.4k new clients</h5>
-        <p class="text-base font-normal text-gray-400">Client Rate</p>
+        <h5 class="leading-none text-3xl font-bold text-white pb-2">101.2k Unique Visitors</h5>
+        <p class="text-base font-normal text-gray-400">Visitor Analytics</p>
       </div>
       <!-- TODO: Arrow up arrow down system -->
       <div
@@ -103,7 +87,7 @@
       </div>
     </div>
     {#if browser}
-        <div id="totalUsersChart"></div>
+        <div id="profitExpenseChart"></div>
     {/if}
     <div class="grid grid-cols-1 items-center border-t border-base-300 justify-between">
       <div class="flex justify-between items-center pt-5">
@@ -150,4 +134,3 @@
       </div>
     </div>
   </div>
-  

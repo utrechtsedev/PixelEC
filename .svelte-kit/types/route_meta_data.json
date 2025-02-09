@@ -1,7 +1,9 @@
 {
 	"/(dashboard)": [],
 	"/": [],
-	"/(dashboard)/dashboard": [],
+	"/(dashboard)/dashboard": [
+		"src/routes/(dashboard)/dashboard/+page.server.js"
+	],
 	"/(dashboard)/dashboard/account": [],
 	"/(dashboard)/dashboard/customers": [],
 	"/(dashboard)/dashboard/discounts": [],
