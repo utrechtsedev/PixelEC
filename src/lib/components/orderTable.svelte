@@ -5,18 +5,24 @@
     let searchQuery = '';
     let sortBy = 'created_at'; // Default sort by date
     let sortDirection = 'desc'; // Default sort direction
+    
+// fulfillment status:
+//     'pending',
+//     'shipped',
+//     'delivered',
+//     'cancelled'
 
     // Reactive filtered data
     $: filteredData = data.filter(order => {
         switch(selectedFilter) {
             case 'Open':
-                return !['Delivered', 'Cancelled'].includes(order.fulfillment_status);
+                return order.fulfillment_status === 'pending';
             case 'Unfulfilled':
-                return order.fulfillment_status === 'Pending';
+                return order.fulfillment_status === 'pending';
             case 'Unpaid':
-                return order.payment_status === 'Pending';
+                return order.payment_status === 'unpaid';
             case 'Closed':
-                return ['Delivered', 'Cancelled'].includes(order.fulfillment_status);
+                return ['delivered', 'cancelled'].includes(order.fulfillment_status);
             case 'All':
             default:
                 return true;
@@ -52,16 +58,24 @@
         }
     }
 
+// fulfillment status:
+//     'pending',
+//     'shipped',
+//     'delivered',
+//     'cancelled'
+
     const statusStyles = {
         payment: {
-            Paid: 'bg-success text-success-content',
-            Pending: 'bg-warning text-warning-content'
+            paid: 'bg-success text-success-content',
+            unpaid: 'bg-warning text-warning-content',
+            refunded: 'bg-error text-error-content'
+
         },
         fulfillment: {
-            Shipped: 'bg-info text-info-content',
-            Delivered: 'bg-success text-success-content',
-            Pending: 'bg-warning text-warning-content',
-            Cancelled: 'bg-error text-error-content'
+            pending: 'bg-warning text-warning-content',
+            shipped: 'bg-info text-info-content',
+            delivered: 'bg-success text-success-content',
+            cancelled: 'bg-error text-error-content',
         }
     };
 </script>
@@ -128,7 +142,7 @@
             <option value="desc">Descending</option>
         </select>
     </div>
-    <div class="overflow-x-auto rounded-lg shadow-md bg-base-300 pb-3">
+    <div class="overflow-x-auto shadow-md bg-base-300 pb-3">
         {#if filteredData.length === 0}
             <div class="text-center p-8 bg-base-200 rounded-b-lg">
                 <p class="text-gray-500">No orders found</p>

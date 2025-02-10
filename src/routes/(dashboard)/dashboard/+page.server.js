@@ -6,16 +6,18 @@ export const load = async ({ fetch }) => {
         
         const apiData = await res.json();
 
+
+
         const formattedData = apiData.map(item => ({
             order_id: item.id,
             created_at: item.order_date,  // Bewaar de ISO datum
             customer: item.customer,
             total_amount: item.total_spent,
-            payment_status: item.status === 'pending' ? 'Pending' : 'Paid',
+            payment_status: item.payment_status,
             fulfillment_status: item.status,
             items: item.total_items
         }));
-
+        console.log(formattedData)
         return {
                 orders: formattedData  // Gebruik duidelijke property naam
         };

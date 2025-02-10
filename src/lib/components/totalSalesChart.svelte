@@ -103,8 +103,8 @@ zoom: {
 <div class="w-full h-[52vh] rounded-xl shadow-xl bg-base-200 p-4 md:p-6 border border-base-300">
     <div class="flex justify-between">
       <div>
-        <h5 class="leading-none text-3xl font-bold text-white pb-2">32.4k Users | 8k Sales</h5>
-        <p class="text-base font-normal text-gray-400">Conversion Rate</p>
+        <h5 class="leading-none text-3xl font-bold pb-2">32.4k Users | 8k Sales</h5>
+        <p class="text-base font-normal">Conversion Rate</p>
       </div>
       <!-- TODO: Arrow up arrow down system -->
       <div
@@ -125,7 +125,7 @@ zoom: {
           id="dropdownDefaultButton"
           data-dropdown-toggle="lastDaysdropdown"
           data-dropdown-placement="bottom"
-          class="text-sm font-medium text-gray-400 text-center inline-flex items-center hover:text-white"
+          class="text-sm font-medium text-center inline-flex items-center"
           type="button">
           Last 7 days
           <svg class="w-2.5 m-2.5 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -133,28 +133,28 @@ zoom: {
           </svg>
         </button>
         <!-- Dropdown menu -->
-        <div id="lastDaysdropdown" class="z-10 hidden divide-y divide-gray-100 rounded-lg shadow-sm w-44 bg-gray-700">
+        <div id="lastDaysdropdown" class="z-10 hidden divide-y divide-gray-100 rounded-lg shadow-sm w-44">
             <ul class="py-2 text-sm text-gray-200" aria-labelledby="dropdownDefaultButton">
               <li>
-                <a href="/" class="block px-4 py-2 hover:bg-gray-600 hover:text-white">Yesterday</a>
+                <a href="/" class="block px-4 py-2 hover:bg-primary">Yesterday</a>
               </li>
               <li>
-                <a href="/" class="block px-4 py-2 hover:bg-gray-600 hover:text-white">Today</a>
+                <a href="/" class="block px-4 py-2 hover:bg-primary">Today</a>
               </li>
               <li>
-                <a href="/" class="block px-4 py-2 hover:bg-gray-600 hover:text-white">Last 7 days</a>
+                <a href="/" class="block px-4 py-2 hover:bg-primary">Last 7 days</a>
               </li>
               <li>
-                <a href="/" class="block px-4 py-2 hover:bg-gray-600 hover:text-white">Last 30 days</a>
+                <a href="/" class="block px-4 py-2 hover:bg-primary">Last 30 days</a>
               </li>
               <li>
-                <a href="/" class="block px-4 py-2 hover:bg-gray-600 hover:text-white">Last 90 days</a>
+                <a href="/" class="block px-4 py-2 hover:bg-primary">Last 90 days</a>
               </li>
             </ul>
         </div>
         <a
           href="/"
-          class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-500  hover:bg-gray-700 focus:ring-gray-700 border-gray-700 px-3 py-2">
+          class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:bg-primary px-3 py-2">
           Users Report
           <svg class="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>

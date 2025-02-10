@@ -59,6 +59,19 @@
 				</a>
 			</li>
 			<li>
+				<a href="/dashboard/categories">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+						<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+							<path d="M11 5h10m-10 7h10m-10 7h10" />
+							<rect width="4" height="4" x="3" y="3" fill="currentColor" rx="1" />
+							<rect width="4" height="4" x="3" y="10" fill="currentColor" rx="1" />
+							<rect width="4" height="4" x="3" y="17" fill="currentColor" rx="1" />
+						</g>
+					</svg>
+					Categories
+				</a>
+			</li>
+			<li>
 				<a href="/dashboard/customers">
 					<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
 						<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
