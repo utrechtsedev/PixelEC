@@ -3,7 +3,8 @@
   import TotalUsersChart from "$lib/components/totalUsersChart.svelte";
   import TotalSalesChart from "$lib/components/totalSalesChart.svelte";
     import ProfitExpenseChart from "$lib/components/profitExpenseChart.svelte";
-    import AgTable from "$lib/components/agTable.svelte";
+    import OrderTable from "$lib/components/orderTable.svelte";
+
     export let data; 
 //  let data = [
 //     {
@@ -71,4 +72,4 @@
     <div class="w-full h-full"><TotalSalesChart /></div>
     <div class="w-full h-full"><ProfitExpenseChart /></div>
 </div>
-<AgTable data={data?.orders || []} />
+<OrderTable data={data?.orders || []} />
