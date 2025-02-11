@@ -12,7 +12,6 @@ export const load = async ({ fetch }) => {
             parent_id: item.parent_id,
             created_at: item.created_at,
         }));
-        console.log(formattedData);
         return {data: formattedData}; // Direct de array retourneren
         
     } catch (err) {

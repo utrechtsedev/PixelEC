@@ -17,7 +17,6 @@ export const load = async ({ fetch }) => {
             fulfillment_status: item.status,
             items: item.total_items
         }));
-        console.log(formattedData)
         return {
                 orders: formattedData  // Gebruik duidelijke property naam
         };
