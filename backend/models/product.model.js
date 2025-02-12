@@ -5,6 +5,47 @@ const Category = require('./category.model');
 
 class Product extends Model {};
 
+class ProductImage extends Model {}
+
+ProductImage.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    product_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'products',
+        key: 'product_id',
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+    },
+    imageUrl: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+    },
+  },
+  {
+    sequelize,
+    modelName: 'ProductImage',
+    tableName: 'product_images',
+    timestamps: true,
+    underscored: true,
+  }
+);
+
 Product.init(
   {
   product_id: {
@@ -35,6 +76,14 @@ Product.init(
     type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 0
+  },
+  front_image_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: 'product_images',
+      key: 'id'
+    }
   }
 }, {
   sequelize,
@@ -42,10 +91,15 @@ Product.init(
   timestamps: true,
   createdAt: 'created_at',
   updatedAt: 'updated_at'
-}
-);
-// Relatie: één categorie kan meerdere producten hebben
+});
+
+
+
+
 Product.belongsTo(Category, { foreignKey: 'category_id' });
 Category.hasMany(Product, { foreignKey: 'category_id' });
 
-module.exports = Product;
+Product.hasMany(ProductImage, { foreignKey: 'product_id' });
+ProductImage.belongsTo(Product, { foreignKey: 'product_id' });
+
+module.exports = Product, ProductImage;

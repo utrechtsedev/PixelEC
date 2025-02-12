@@ -1,12 +1,19 @@
 {
 	"/(dashboard)": [],
 	"/": [],
+	"/api/categories/[id]": [
+		"src/routes/api/categories/[id]/+server.js"
+	],
 	"/(dashboard)/dashboard": [
 		"src/routes/(dashboard)/dashboard/+page.server.js"
 	],
 	"/(dashboard)/dashboard/account": [],
 	"/(dashboard)/dashboard/categories": [
-		"src/routes/(dashboard)/dashboard/categories/+page.server.js"
+		"src/routes/(dashboard)/dashboard/categories/+layout.server.js",
+		"src/routes/(dashboard)/dashboard/categories/+layout.server.js"
+	],
+	"/(dashboard)/dashboard/categories/edit": [
+		"src/routes/(dashboard)/dashboard/categories/+layout.server.js"
 	],
 	"/(dashboard)/dashboard/customers": [],
 	"/(dashboard)/dashboard/discounts": [],

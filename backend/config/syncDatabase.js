@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 
 // Synchroniseer de modellen met de database (alleen in development)
-sequelize.sync({ force: false }) // force = true zal tabellen droppen en opnieuw aanmaken!
+sequelize.sync({ force: true }) // force = true zal tabellen droppen en opnieuw aanmaken!
   .then(() => {
     console.log('Database gesynchroniseerd!');
   })

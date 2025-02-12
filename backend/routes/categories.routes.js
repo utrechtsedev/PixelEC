@@ -63,6 +63,10 @@ router.delete('/:id', async (req, res) => {
     res.status(204).send();
   } catch (err) {
     res.status(500).json({ error: err.message });
+  } finally {
+    const Children = Category.findAll({where: {parent_id: req.params.id}})
+    if (!Children) {return}
+    await Category.destroy({where: {parent_id: req.params.id}})
   }
 });
 

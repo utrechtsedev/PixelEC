@@ -2,8 +2,8 @@ const { sequelize } = require('../config/db');
 
 const User = require('./user.model');
 const Address = require('./address.model');
-const Category = require('./category.model');
-const Product = require('./product.model');
+const { Category, CategoryImage } = require('./category.model');
+const { Product, ProductImage} = require('./product.model');
 const Order = require('./order.model');
 const OrderItem = require('./orderitem.model');
 const OrderAddress = require('./orderaddress.model');
@@ -19,7 +19,9 @@ module.exports = {
   User,
   Address,
   Category,
+  CategoryImage,
   Product,
+  ProductImage,
   Order,
   OrderItem,
   OrderAddress

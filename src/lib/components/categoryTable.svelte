@@ -4,10 +4,17 @@
     import { fade, scale, slide } from 'svelte/transition';
     let searchTerm = '';
   export let data;
+  import { tableVisibility } from '../../stores/object.js';
   
   let categories = data;
   let selectedCategories = new Set();
   let expanded = {};
+
+  const handleEdit = async () => {
+    if (selectedCategories.size > 1) return; // TODO: popup (teveel geselecteerd om te bewerken)
+
+
+  }
 
 
   // Reactive declarations
@@ -71,9 +78,34 @@
       expanded = {...expanded, [categoryId]: !expanded[categoryId]};
   };
   
-  const handleDelete = () => {
-      console.log('Deleting categories:', Array.from(selectedCategories));
+  const handleDelete = async () => {
+    if (selectedCategories.size === 0) return;
+
+    const ids = Array.from(selectedCategories);
+    
+    try {
+      // Create array of delete promises
+      const deletePromises = ids.map(id => 
+        fetch(`/api/categories/${id}`, {
+          method: 'DELETE'
+        })
+      );
+
+      // Wait for all deletions to complete
+      const results = await Promise.all(deletePromises);
+      const allSuccess = results.every(r => r.ok);
+      
+      if (!allSuccess) throw new Error('Some deletions failed');
+
+      // Update local state
+      categories = categories.filter(c => !selectedCategories.has(c.category_id));
       selectedCategories = new Set();
+      
+      alert('Categories deleted successfully!');
+    } catch (error) {
+      console.error('Delete error:', error);
+      alert('Failed to delete some or all categories.');
+    }
   };
 </script>
 <div class="p-4 bg-base-300 rounded-lg shadow-md">
@@ -81,7 +113,6 @@
       <h2 class="text-2xl font-bold">Categories</h2>
       <div class="flex gap-3">
         <input 
-            transition:scale
             type="text" 
             placeholder="Search categories..." 
             class="input input-bordered w-full max-w-xs h-8" 
@@ -93,7 +124,7 @@
         </button>
         <button 
         class="btn btn-sm" 
-        on:click={handleDelete}>
+        on:click={handleEdit}>
         Edit
         </button>
         <button 
@@ -173,7 +204,7 @@
                   <!-- Child Categories Rows -->
                   {#if expanded[category.category_id]}
                   {#each filteredChildCategoriesMap[category.category_id] as child}
-                      <tr transition:slide>
+                      <tr>
                               <td>
                                   <label>
                                       <input

@@ -37,7 +37,7 @@ app.use('/order-addresses', orderAddressRoutes);
 
     // Synchroniseer modellen (pas 'force' aan naar behoefte)
     // force: true wist en hermaakt alle tabellen => alleen handig in dev!
-    await sequelize.sync({ force: false });
+    await sequelize.sync({ alter:true});
     console.log('Database modellen gesynchroniseerd!');
     
     // 8. Start de server
