@@ -1,4 +1,4 @@
-<script>
+<script> // todo: there is a weird refresh bug when uploading and directly deleting an image. page must be reloaded before selectedImage is populated. FIX THIS!
     import { onMount } from "svelte";
     import { page } from "$app/state";
     import { goto } from '$app/navigation';
@@ -7,8 +7,10 @@
 
     let editorRef;
     let content = "";
-    let edittingCategory;
-    let categoryImages = [];
+    let edittingCategory = {};
+    let categoryImages = []; // Your images array
+    let selectedImage = null;
+    let modal;
     let categories = data?.data || [];
     let parentCategoryId = null;
 
@@ -27,20 +29,25 @@
     // Initialisatie
     onMount(async () => {
         edittingCategory = categories.find(c => c.category_id == page.params.id);
-        
+
         if (!edittingCategory) {
             await goto('/dashboard/categories');
             return;
         }
-        
+
         content = edittingCategory.description || '';
         parentCategoryId = edittingCategory.parent_id;
         if (editorRef) editorRef.innerHTML = content;
-    });
 
+        //fetch all category images
+        let req = await (await fetch(`/api/categories/images/${page.params.id}`))
+        categoryImages = await req.json();
+        console.log(categoryImages)
+    });
     // Opslaan basisgegevens
     const saveDetails = async () => {
         try {
+
             const response = await fetch(`/api/categories/${page.params.id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
@@ -69,13 +76,13 @@
                 formData.append('images', file);
             });
 
-            const response = await fetch(`/api/categories/${edittingCategory.category_id}/images`, {
+            const response = await fetch(`/api/categories/images/${page.params.id}`, {
                 method: 'POST',
                 body: formData
             });
 
             if (!response.ok) throw await response.json();
-            
+
             // Ververs afbeeldingen
             const result = await response.json();
             categoryImages = [...categoryImages, ...result.images];
@@ -91,13 +98,13 @@
     <div class="bg-base-200 p-4 rounded-lg w-full md:w-8/12 border border-base-300">
         <h3 class="text-xl font-bold mb-2">Titel:</h3>
         <input
-            value={edittingCategory?.name}
+            bind:value={edittingCategory.name}
             class="input input-bordered w-full"
             placeholder="Bijv. Zomercollectie, Fietsaccessoires"
         />
 
         <h3 class="text-xl font-bold mt-4 mb-2">Beschrijving:</h3>
-        
+
         <div class="border border-base-300 rounded-lg">
             <!-- Toolbar -->
             <div class="flex flex-wrap gap-1 p-2 bg-base-300 border-b border-base-300">
@@ -145,40 +152,42 @@
     </div>
 
     <!-- Rechterkolom -->
-    <div class="bg-base-200 p-4 rounded-lg w-full md:w-4/12 border border-base-300">
-        <div class="space-y-4">
-            <div>
-                <label class="font-bold block mb-2">Hoofdcategorie:</label>
-                <select class="select select-bordered w-full" bind:value={parentCategoryId}>
-                    <option value={null}>Geen</option>
-                    {#each categories.filter(c => !c.parent_id) as category}
-                        <option value={category.category_id}>{category.name}</option>
-                    {/each}
-                </select>
+    <div class="bg-base-200 p-4 rounded-lg w-full md:w-4/12 border border-base-300 h-full">
+        <div class="flex flex-col h-full justify-between">
+            <div class="space-y-4">
+                <div>
+                    <label class="font-bold block mb-2">Main Category:</label>
+                    <select class="select select-bordered w-full" bind:value={parentCategoryId}>
+                        <option value={null}>None</option>
+                        {#each categories.filter(c => !c.parent_id && c.category_id !== edittingCategory.category_id) as category}
+                            <option value={category.category_id}>{category.name}</option>
+                        {/each}
+                    </select>
+                </div>
+    
+                <div>
+                    <label class="font-bold block mb-2">Afbeeldingen:</label>
+                    <input
+                        id="imageUpload"
+                        type="file"
+                        class="file-input file-input-bordered w-full"
+                        multiple
+                        accept="image/*"
+                    />
+                    <button
+                        on:click={uploadImages}
+                        class="btn btn-primary w-full mt-2"
+                    >
+                        Upload Image(s)
+                    </button>
+                </div>
             </div>
-
-            <div>
-                <label class="font-bold block mb-2">Afbeeldingen:</label>
-                <input
-                    id="imageUpload"
-                    type="file"
-                    class="file-input file-input-bordered w-full"
-                    multiple
-                    accept="image/*"
-                />
-                <button 
-                    on:click={uploadImages}
-                    class="btn btn-primary w-full mt-2"
-                >
-                    Uploaden
-                </button>
-            </div>
-
-            <button 
-                on:click={saveDetails} 
-                class="btn btn-success w-full"
+    
+            <button
+                on:click={saveDetails}
+                class="btn btn-success w-full mt-4"
             >
-                Opslaan
+                Save
             </button>
         </div>
     </div>
@@ -186,17 +195,62 @@
 
 {#if categoryImages.length > 0}
     <div class="bg-base-200 p-4 rounded-lg mt-4 border border-base-300">
-        <h3 class="font-bold mb-3">Geüploade afbeeldingen:</h3>
+        <h3 class="font-bold mb-3">Uploaded images:</h3>
         <div class="flex flex-wrap gap-4">
             {#each categoryImages as { id, image_url }}
                 <div class="relative group">
-                    <img
-                        src={image_url}
-                        alt="Categorie afbeelding"
-                        class="h-32 w-32 object-cover rounded-lg shadow"
-                    />
+                    <button on:click={() => {
+                        selectedImage = { id, image_url };
+                        modal.showModal();
+                    }}>
+                        <img
+                            src={image_url}
+                            alt="Categorie afbeelding"
+                            class="h-32 w-32 object-cover rounded-lg shadow"
+                        />
+                    </button>
                 </div>
             {/each}
         </div>
     </div>
+
+    <dialog bind:this={modal} id="image_modal" class="modal">
+        <div class="modal-box">
+            {#if selectedImage}
+                <img
+                    src={selectedImage.image_url}
+                    alt="Geselecteerde afbeelding"
+                    class="w-full h-64 object-contain mb-4"
+                />
+                <div class="modal-action flex justify-between">
+                    <button
+                        class="btn btn-error"
+                        on:click|preventDefault={async () => {
+                            try {
+                                const response = await fetch(`/api/categories/images/${selectedImage.id}`, {
+                                    method: 'DELETE'
+                                });
+
+                                if (response.ok) {
+                                    categoryImages = categoryImages.filter(img => img.id !== selectedImage.id);
+                                    modal.close();
+                                } else {
+                                    alert('Verwijderen mislukt');
+                                }
+                            } catch (error) {
+                                console.error('Delete error:', error);
+                                alert('Fout bij verwijderen');
+                            }
+                        }}
+                    >
+                        Verwijderen
+                    </button>
+                    <form method="dialog">
+                        <button class="btn">Sluiten</button>
+                    </form>
+                </div>
+            {/if}
+        </div>
+    </dialog>
 {/if}
+

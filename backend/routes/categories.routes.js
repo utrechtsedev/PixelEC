@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { Category, CategoryImage } = require('../models');
 const upload = require('../middlewares/multer');
+const fs = require('fs');
+const path = require('path');
+
 
 // GET /categories - Haal alle categorieën op
 router.get('/', async (req, res) => {
@@ -36,23 +39,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// PUT /categories/:id - Update een bestaande categorie
-// router.put('/:id', async (req, res) => {
-//   try {
-//     const [rowsUpdated] = await Category.update(req.body, {
-//       where: { category_id: req.params.id }
-//     });
-//     if (rowsUpdated === 0) {
-//       return res.status(404).json({ error: 'Categorie niet gevonden of geen veranderingen' });
-//     }
-//     const updatedCategory = await Category.findByPk(req.params.id);
-//     res.json(updatedCategory);
-//   } catch (err) {
-//     res.status(400).json({ error: err.message });
-//   }
-// });
-
-
 // DELETE /categories/:id - Verwijder een categorie
 router.delete('/:id', async (req, res) => {
   try {
@@ -72,7 +58,6 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-
 router.put('/:id', async (req, res) => {
   try {
     console.log(req.body);
@@ -89,7 +74,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // Upload afbeeldingen
-router.post('/:id/images', upload.array('images'), async (req, res) => {
+router.post('/images/:id', upload.array('images'), async (req, res) => {
   try {
     const images = req.files.map(file => ({
       category_id: req.params.id,
@@ -113,6 +98,25 @@ router.get('/images/:id', async (req, res) => {
     res.json(categoryImages);
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+router.delete('/images/:id', async (req, res) => {
+  try {
+      const image = await CategoryImage.findOne({where: {id: req.params.id}});
+      if (!image) return res.status(404).send('Image not found');
+      console.log(image.image_url.split('/uploads/')[1])
+      // Delete file from filesystem
+      
+      fs.unlinkSync(path.join(__dirname, '../uploads', image.image_url.split('/uploads/')[1]));
+      
+      // Delete database record
+      await image.destroy();
+      
+      res.status(204).end();
+  } catch (error) {
+      console.error('Delete error:', error);
+      res.status(500).send('Server error');
   }
 });
 

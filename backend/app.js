@@ -1,15 +1,13 @@
 require('dotenv').config(); // om .env-variabelen te laden
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser')
 const { sequelize } = require('./config/db'); 
 const path = require('path');
 require('url');
 
-app.use(express.static('uploads'))
 
 // Middlewares
-app.use(bodyParser.json()); 
+app.use(express.json()); 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // more in the ./middlewares directory
 
