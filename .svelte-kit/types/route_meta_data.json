@@ -9,6 +9,9 @@
 		"src/routes/(dashboard)/dashboard/categories/+layout.server.js",
 		"src/routes/(dashboard)/dashboard/categories/+layout.server.js"
 	],
+	"/(dashboard)/dashboard/categories/create": [
+		"src/routes/(dashboard)/dashboard/categories/+layout.server.js"
+	],
 	"/(dashboard)/dashboard/categories/edit/[id]": [
 		"src/routes/(dashboard)/dashboard/categories/+layout.server.js"
 	],
@@ -17,6 +20,9 @@
 	"/(dashboard)/dashboard/finances": [],
 	"/(dashboard)/dashboard/insights": [],
 	"/(dashboard)/dashboard/orders": [],
-	"/(dashboard)/dashboard/products": [],
+	"/(dashboard)/dashboard/products": [
+		"src/routes/(dashboard)/dashboard/products/+layout.js",
+		"src/routes/(dashboard)/dashboard/products/+layout.js"
+	],
 	"/(dashboard)/dashboard/settings": []
 }

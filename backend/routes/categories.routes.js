@@ -107,7 +107,7 @@ router.delete('/images/:id', async (req, res) => {
       if (!image) return res.status(404).send('Image not found');
       console.log(image.image_url.split('/uploads/')[1])
       // Delete file from filesystem
-      
+
       fs.unlinkSync(path.join(__dirname, '../uploads', image.image_url.split('/uploads/')[1]));
       
       // Delete database record

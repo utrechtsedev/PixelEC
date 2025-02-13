@@ -26,7 +26,6 @@
         document.execCommand('formatBlock', false, '<p>');
     };
 
-    // Initialisatie
     onMount(async () => {
         edittingCategory = categories.find(c => c.category_id == page.params.id);
 
@@ -44,7 +43,6 @@
         categoryImages = await req.json();
         console.log(categoryImages)
     });
-    // Opslaan basisgegevens
     const saveDetails = async () => {
         try {
 
@@ -65,11 +63,10 @@
         }
     };
 
-    // Upload afbeeldingen
     const uploadImages = async () => {
         try {
             const fileInput = document.querySelector('#imageUpload');
-            if (!fileInput.files.length) return alert('Selecteer eerst afbeeldingen');
+            if (!fileInput.files.length) return alert('First select images to upload');
 
             const formData = new FormData();
             Array.from(fileInput.files).forEach(file => {
@@ -83,7 +80,6 @@
 
             if (!response.ok) throw await response.json();
 
-            // Ververs afbeeldingen
             const result = await response.json();
             categoryImages = [...categoryImages, ...result.images];
             fileInput.value = ''; // Reset input
@@ -92,18 +88,23 @@
         }
     };
 </script>
-
+<a href="/dashboard/categories" class="flex items-center gap-2">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" {...$$props}>
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12l6-6m-6 6l6 6m-6-6h14" />
+    </svg>
+    <p class="text-2xl">Categories</p>
+</a>
 <div class="flex flex-col md:flex-row gap-4 mt-5">
     <!-- Linkerkolom -->
     <div class="bg-base-200 p-4 rounded-lg w-full md:w-8/12 border border-base-300">
-        <h3 class="text-xl font-bold mb-2">Titel:</h3>
+        <h3 class="text-xl font-bold mb-2">Title:</h3>
         <input
             bind:value={edittingCategory.name}
             class="input input-bordered w-full"
-            placeholder="Bijv. Zomercollectie, Fietsaccessoires"
+            placeholder="Ex. Summercollection, Bike accessoires"
         />
 
-        <h3 class="text-xl font-bold mt-4 mb-2">Beschrijving:</h3>
+        <h3 class="text-xl font-bold mt-4 mb-2">Description:</h3>
 
         <div class="border border-base-300 rounded-lg">
             <!-- Toolbar -->
@@ -137,17 +138,17 @@
                 {/each}
 
                 <button on:click={clearFormatting} class="btn btn-xs btn-error ml-2">
-                    Wissen
+                    Clear
                 </button>
             </div>
 
-            <!-- Editor -->
+            <!-- Editor --> 
             <div
                 bind:this={editorRef}
                 contenteditable
                 on:input={(e) => content = e.target.innerHTML}
-                class="p-4 min-h-[200px] prose focus:outline-none bg-base-100"
-            />
+                class="p-4 min-h-[200px] prose focus:outline-none bg-base-100 overflow-scroll"
+            ></div>
         </div>
     </div>
 
@@ -166,7 +167,7 @@
                 </div>
     
                 <div>
-                    <label class="font-bold block mb-2">Afbeeldingen:</label>
+                    <label class="font-bold block mb-2">Images:</label>
                     <input
                         id="imageUpload"
                         type="file"
@@ -243,10 +244,10 @@
                             }
                         }}
                     >
-                        Verwijderen
+                        Delete
                     </button>
                     <form method="dialog">
-                        <button class="btn">Sluiten</button>
+                        <button class="btn">Close</button>
                     </form>
                 </div>
             {/if}

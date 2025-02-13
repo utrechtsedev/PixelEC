@@ -176,10 +176,11 @@
                             />
                         </label>
                     </th>
+                    <th>ID</th>
                     <th>Name</th>
-                    <th>Description</th>
-                    <th>Child Categories</th>
-                    <th>Created At</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
                 </tr>
             </thead>
             <tbody>

@@ -1,6 +1,6 @@
 export const load = async ({ fetch }) => {
     try {
-        const res = await fetch('http://localhost/api/categories');
+        const res = await fetch('http://localhost/api/products');
         if (!res.ok) throw new Error('Kon orders niet ophalen');
         
         const apiData = await res.json();
