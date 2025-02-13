@@ -1,0 +1,202 @@
+<script>
+    import { onMount } from "svelte";
+    import { page } from "$app/state";
+    import { goto } from '$app/navigation';
+
+    export let data;
+
+    let editorRef;
+    let content = "";
+    let edittingCategory;
+    let categoryImages = [];
+    let categories = data?.data || [];
+    let parentCategoryId = null;
+
+    // Editor functies
+    const format = (command, value = null) => {
+        document.execCommand(command, false, value);
+        editorRef.focus();
+    };
+
+    const clearFormatting = () => {
+        document.execCommand('removeFormat');
+        document.execCommand('formatBlock', false, '<div>');
+        document.execCommand('formatBlock', false, '<p>');
+    };
+
+    // Initialisatie
+    onMount(async () => {
+        edittingCategory = categories.find(c => c.category_id == page.params.id);
+        
+        if (!edittingCategory) {
+            await goto('/dashboard/categories');
+            return;
+        }
+        
+        content = edittingCategory.description || '';
+        parentCategoryId = edittingCategory.parent_id;
+        if (editorRef) editorRef.innerHTML = content;
+    });
+
+    // Opslaan basisgegevens
+    const saveDetails = async () => {
+        try {
+            const response = await fetch(`/api/categories/${page.params.id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: edittingCategory.name,
+                    description: content,
+                    parent_id: parentCategoryId
+                })
+            });
+
+            if (!response.ok) throw await response.json();
+            alert('Successvol opgeslagen!');
+        } catch (error) {
+            alert(error.message || 'Opslaan mislukt');
+        }
+    };
+
+    // Upload afbeeldingen
+    const uploadImages = async () => {
+        try {
+            const fileInput = document.querySelector('#imageUpload');
+            if (!fileInput.files.length) return alert('Selecteer eerst afbeeldingen');
+
+            const formData = new FormData();
+            Array.from(fileInput.files).forEach(file => {
+                formData.append('images', file);
+            });
+
+            const response = await fetch(`/api/categories/${edittingCategory.category_id}/images`, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) throw await response.json();
+            
+            // Ververs afbeeldingen
+            const result = await response.json();
+            categoryImages = [...categoryImages, ...result.images];
+            fileInput.value = ''; // Reset input
+        } catch (error) {
+            alert(error.message || 'Upload mislukt');
+        }
+    };
+</script>
+
+<div class="flex flex-col md:flex-row gap-4 mt-5">
+    <!-- Linkerkolom -->
+    <div class="bg-base-200 p-4 rounded-lg w-full md:w-8/12 border border-base-300">
+        <h3 class="text-xl font-bold mb-2">Titel:</h3>
+        <input
+            value={edittingCategory?.name}
+            class="input input-bordered w-full"
+            placeholder="Bijv. Zomercollectie, Fietsaccessoires"
+        />
+
+        <h3 class="text-xl font-bold mt-4 mb-2">Beschrijving:</h3>
+        
+        <div class="border border-base-300 rounded-lg">
+            <!-- Toolbar -->
+            <div class="flex flex-wrap gap-1 p-2 bg-base-300 border-b border-base-300">
+                {#each ['h1', 'h2', 'h3'] as heading}
+                    <button
+                        on:click={() => format('formatBlock', `<${heading}>`)}
+                        class="btn btn-xs btn-primary"
+                    >
+                        {heading.toUpperCase()}
+                    </button>
+                {/each}
+
+                <div class="divider divider-horizontal mx-1"></div>
+
+                {#each ['bold', 'italic', 'underline', 'strikeThrough'] as cmd}
+                    <button on:click={() => format(cmd)} class="btn btn-xs">
+                        {#if cmd === 'bold'}<strong>B</strong>
+                        {:else if cmd === 'italic'}<em>I</em>
+                        {:else if cmd === 'underline'}<u>U</u>
+                        {:else}<s>S</s>{/if}
+                    </button>
+                {/each}
+
+                <div class="divider divider-horizontal mx-1"></div>
+
+                {#each [{ symbol: '←', cmd: 'justifyLeft' }, { symbol: '↔', cmd: 'justifyCenter' }, { symbol: '→', cmd: 'justifyRight' }] as align}
+                    <button on:click={() => format(align.cmd)} class="btn btn-xs">
+                        {align.symbol}
+                    </button>
+                {/each}
+
+                <button on:click={clearFormatting} class="btn btn-xs btn-error ml-2">
+                    Wissen
+                </button>
+            </div>
+
+            <!-- Editor -->
+            <div
+                bind:this={editorRef}
+                contenteditable
+                on:input={(e) => content = e.target.innerHTML}
+                class="p-4 min-h-[200px] prose focus:outline-none bg-base-100"
+            />
+        </div>
+    </div>
+
+    <!-- Rechterkolom -->
+    <div class="bg-base-200 p-4 rounded-lg w-full md:w-4/12 border border-base-300">
+        <div class="space-y-4">
+            <div>
+                <label class="font-bold block mb-2">Hoofdcategorie:</label>
+                <select class="select select-bordered w-full" bind:value={parentCategoryId}>
+                    <option value={null}>Geen</option>
+                    {#each categories.filter(c => !c.parent_id) as category}
+                        <option value={category.category_id}>{category.name}</option>
+                    {/each}
+                </select>
+            </div>
+
+            <div>
+                <label class="font-bold block mb-2">Afbeeldingen:</label>
+                <input
+                    id="imageUpload"
+                    type="file"
+                    class="file-input file-input-bordered w-full"
+                    multiple
+                    accept="image/*"
+                />
+                <button 
+                    on:click={uploadImages}
+                    class="btn btn-primary w-full mt-2"
+                >
+                    Uploaden
+                </button>
+            </div>
+
+            <button 
+                on:click={saveDetails} 
+                class="btn btn-success w-full"
+            >
+                Opslaan
+            </button>
+        </div>
+    </div>
+</div>
+
+{#if categoryImages.length > 0}
+    <div class="bg-base-200 p-4 rounded-lg mt-4 border border-base-300">
+        <h3 class="font-bold mb-3">Geüploade afbeeldingen:</h3>
+        <div class="flex flex-wrap gap-4">
+            {#each categoryImages as { id, image_url }}
+                <div class="relative group">
+                    <img
+                        src={image_url}
+                        alt="Categorie afbeelding"
+                        class="h-32 w-32 object-cover rounded-lg shadow"
+                    />
+                </div>
+            {/each}
+        </div>
+    </div>
+{/if}

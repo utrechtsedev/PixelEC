@@ -1,9 +1,6 @@
 {
 	"/(dashboard)": [],
 	"/": [],
-	"/api/categories/[id]": [
-		"src/routes/api/categories/[id]/+server.js"
-	],
 	"/(dashboard)/dashboard": [
 		"src/routes/(dashboard)/dashboard/+page.server.js"
 	],
@@ -12,7 +9,7 @@
 		"src/routes/(dashboard)/dashboard/categories/+layout.server.js",
 		"src/routes/(dashboard)/dashboard/categories/+layout.server.js"
 	],
-	"/(dashboard)/dashboard/categories/edit": [
+	"/(dashboard)/dashboard/categories/edit/[id]": [
 		"src/routes/(dashboard)/dashboard/categories/+layout.server.js"
 	],
 	"/(dashboard)/dashboard/customers": [],

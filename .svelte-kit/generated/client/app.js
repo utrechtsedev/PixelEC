@@ -24,7 +24,7 @@ export const dictionary = {
 		"/(dashboard)/dashboard": [~4,[2]],
 		"/(dashboard)/dashboard/account": [5,[2]],
 		"/(dashboard)/dashboard/categories": [6,[2,3]],
-		"/(dashboard)/dashboard/categories/edit": [7,[2,3]],
+		"/(dashboard)/dashboard/categories/edit/[id]": [7,[2,3]],
 		"/(dashboard)/dashboard/customers": [8,[2]],
 		"/(dashboard)/dashboard/discounts": [9,[2]],
 		"/(dashboard)/dashboard/finances": [10,[2]],

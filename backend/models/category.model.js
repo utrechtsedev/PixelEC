@@ -2,8 +2,8 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../config/db');
 
-class Category extends Model {};
-class CategoryImage extends Model {}
+class Category extends Model { };
+class CategoryImage extends Model { }
 
 CategoryImage.init(
   {
@@ -22,21 +22,19 @@ CategoryImage.init(
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
     },
-    imageUrl: {
+    image_url: {
       type: DataTypes.STRING(255),
       allowNull: false,
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
+      validate: {
+        notEmpty: true // Voeg extra validatie toe
+      }
     },
   },
   {
     sequelize,
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
     modelName: 'CategoryImage',
     tableName: 'category_images',
     timestamps: true, // Enables automatic timestamps (createdAt, updatedAt)
@@ -46,31 +44,31 @@ CategoryImage.init(
 
 Category.init(
   {
-  category_id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true
-  },
-  name: {
-    type: DataTypes.STRING(100),
-    allowNull: false
-  },
-  description: {
-    type: DataTypes.TEXT
-  },
-  parent_id: {
-    type: DataTypes.INTEGER,
-    allowNull: true
-  },
-  front_image_id: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-    references: {
-      model: 'category_images',
-      key: 'id'
-    }
-  },
-}, {
+    category_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
+    name: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
+    description: {
+      type: DataTypes.TEXT
+    },
+    parent_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    front_image_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'category_images',
+        key: 'id'
+      }
+    },
+  }, {
   sequelize,
   tableName: 'categories',
   timestamps: true,
@@ -93,4 +91,4 @@ Category.hasMany(CategoryImage, { foreignKey: 'category_id' });
 CategoryImage.belongsTo(Category, { foreignKey: 'category_id' });
 
 
-module.exports = Category, CategoryImage;
+module.exports = { Category, CategoryImage };

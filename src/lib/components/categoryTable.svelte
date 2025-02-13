@@ -3,7 +3,7 @@
   import { onMount } from 'svelte';
     import { fade, scale, slide } from 'svelte/transition';
     let searchTerm = '';
-  export let data;
+  export let data = [];
   import { tableVisibility } from '../../stores/object.js';
   
   let categories = data;

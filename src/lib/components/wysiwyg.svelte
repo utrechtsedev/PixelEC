@@ -80,12 +80,12 @@
       contenteditable="true"
       on:input={(e) => (content = e.target.innerHTML)}
       class="w-full p-4 min-h-[200px] border-8 border-base-300 rounded-b-lg prose 
-            focus:outline-none"
-    ></div>
-    </div>
-  
-    <!-- HTML Output Preview -->
-
-    <!-- <div class="mt-4 p-4 bg-base-200 rounded-lg">
+            focus:outline-none bg-base-100"
+    > {@html content}
+  </div>
+</div>
+    
+<!--   
+   <div class="mt-4 p-4 bg-base-200 rounded-lg">
       <pre class="text-sm">{content}</pre>
     </div> -->

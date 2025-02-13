@@ -1,7 +1,7 @@
 // models/Product.js
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Category = require('./category.model');
+const {Category} = require('./category.model');
 
 class Product extends Model {};
 
@@ -102,4 +102,4 @@ Category.hasMany(Product, { foreignKey: 'category_id' });
 Product.hasMany(ProductImage, { foreignKey: 'product_id' });
 ProductImage.belongsTo(Product, { foreignKey: 'product_id' });
 
-module.exports = Product, ProductImage;
+module.exports = {Product, ProductImage};

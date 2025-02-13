@@ -1,6 +1,6 @@
 export const load = async ({ fetch }) => {
     try {
-        const res = await fetch('http://localhost:5000/orders/dashboard/table');
+        const res = await fetch('http://localhost/api/orders/dashboard/table');
         
         if (!res.ok) throw new Error('Kon orders niet ophalen');
         

@@ -26,6 +26,7 @@
  * ```
  */
 declare module '$env/static/private' {
+	export const NODE_ENV: string;
 	export const GJS_DEBUG_TOPICS: string;
 	export const LESSOPEN: string;
 	export const USER: string;
@@ -45,7 +46,9 @@ declare module '$env/static/private' {
 	export const TERM_PROGRAM_VERSION: string;
 	export const DESKTOP_SESSION: string;
 	export const GTK_PATH: string;
+	export const NVM_BIN: string;
 	export const npm_package_json: string;
+	export const NVM_INC: string;
 	export const XDG_DATA_HOME_VSCODE_SNAP_ORIG: string;
 	export const GTK_IM_MODULE_FILE: string;
 	export const GIO_LAUNCHED_DESKTOP_FILE: string;
@@ -53,6 +56,7 @@ declare module '$env/static/private' {
 	export const GTK_MODULES: string;
 	export const GSETTINGS_SCHEMA_DIR_VSCODE_SNAP_ORIG: string;
 	export const VSCODE_GIT_ASKPASS_MAIN: string;
+	export const NIX_PROFILES: string;
 	export const VSCODE_GIT_ASKPASS_NODE: string;
 	export const MANAGERPID: string;
 	export const npm_config_userconfig: string;
@@ -64,6 +68,7 @@ declare module '$env/static/private' {
 	export const COLORTERM: string;
 	export const GIO_LAUNCHED_DESKTOP_FILE_PID: string;
 	export const COLOR: string;
+	export const NVM_DIR: string;
 	export const DEBUGINFOD_URLS: string;
 	export const npm_config_metrics_registry: string;
 	export const IM_CONFIG_PHASE: string;
@@ -116,6 +121,7 @@ declare module '$env/static/private' {
 	export const LESSCLOSE: string;
 	export const GTK_PATH_VSCODE_SNAP_ORIG: string;
 	export const FONTCONFIG_FILE: string;
+	export const NIX_SSL_CERT_FILE: string;
 	export const GTK_IM_MODULE_FILE_VSCODE_SNAP_ORIG: string;
 	export const GJS_DEBUG_OUTPUT: string;
 	export const VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
@@ -123,16 +129,16 @@ declare module '$env/static/private' {
 	export const npm_config_globalconfig: string;
 	export const npm_config_init_module: string;
 	export const PWD: string;
-	export const npm_config_globalignorefile: string;
 	export const npm_execpath: string;
 	export const XDG_CONFIG_DIRS: string;
+	export const NVM_CD_FLAGS: string;
 	export const XDG_DATA_DIRS: string;
 	export const npm_config_global_prefix: string;
 	export const npm_command: string;
 	export const MEMORY_PRESSURE_WRITE: string;
 	export const INIT_CWD: string;
 	export const EDITOR: string;
-	export const NODE_ENV: string;
+	export const VITE_USER_NODE_ENV: string;
 }
 
 /**
@@ -164,6 +170,7 @@ declare module '$env/static/public' {
  */
 declare module '$env/dynamic/private' {
 	export const env: {
+		NODE_ENV: string;
 		GJS_DEBUG_TOPICS: string;
 		LESSOPEN: string;
 		USER: string;
@@ -183,7 +190,9 @@ declare module '$env/dynamic/private' {
 		TERM_PROGRAM_VERSION: string;
 		DESKTOP_SESSION: string;
 		GTK_PATH: string;
+		NVM_BIN: string;
 		npm_package_json: string;
+		NVM_INC: string;
 		XDG_DATA_HOME_VSCODE_SNAP_ORIG: string;
 		GTK_IM_MODULE_FILE: string;
 		GIO_LAUNCHED_DESKTOP_FILE: string;
@@ -191,6 +200,7 @@ declare module '$env/dynamic/private' {
 		GTK_MODULES: string;
 		GSETTINGS_SCHEMA_DIR_VSCODE_SNAP_ORIG: string;
 		VSCODE_GIT_ASKPASS_MAIN: string;
+		NIX_PROFILES: string;
 		VSCODE_GIT_ASKPASS_NODE: string;
 		MANAGERPID: string;
 		npm_config_userconfig: string;
@@ -202,6 +212,7 @@ declare module '$env/dynamic/private' {
 		COLORTERM: string;
 		GIO_LAUNCHED_DESKTOP_FILE_PID: string;
 		COLOR: string;
+		NVM_DIR: string;
 		DEBUGINFOD_URLS: string;
 		npm_config_metrics_registry: string;
 		IM_CONFIG_PHASE: string;
@@ -254,6 +265,7 @@ declare module '$env/dynamic/private' {
 		LESSCLOSE: string;
 		GTK_PATH_VSCODE_SNAP_ORIG: string;
 		FONTCONFIG_FILE: string;
+		NIX_SSL_CERT_FILE: string;
 		GTK_IM_MODULE_FILE_VSCODE_SNAP_ORIG: string;
 		GJS_DEBUG_OUTPUT: string;
 		VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
@@ -261,16 +273,16 @@ declare module '$env/dynamic/private' {
 		npm_config_globalconfig: string;
 		npm_config_init_module: string;
 		PWD: string;
-		npm_config_globalignorefile: string;
 		npm_execpath: string;
 		XDG_CONFIG_DIRS: string;
+		NVM_CD_FLAGS: string;
 		XDG_DATA_DIRS: string;
 		npm_config_global_prefix: string;
 		npm_command: string;
 		MEMORY_PRESSURE_WRITE: string;
 		INIT_CWD: string;
 		EDITOR: string;
-		NODE_ENV: string;
+		VITE_USER_NODE_ENV: string;
 		[key: `PUBLIC_${string}`]: undefined;
 		[key: `${string}`]: string | undefined;
 	}

@@ -3,9 +3,15 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser')
 const { sequelize } = require('./config/db'); 
+const path = require('path');
+require('url');
+
+app.use(express.static('uploads'))
 
 // Middlewares
 app.use(bodyParser.json()); 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// more in the ./middlewares directory
 
 // Routes
 const userRoutes = require('./routes/users.routes');
@@ -17,13 +23,13 @@ const orderItemRoutes = require('./routes/orderItems.routes');
 const orderAddressRoutes = require('./routes/orderAddresses.routes');
 
 // Mounted routes
-app.use('/users', userRoutes);
-app.use('/addresses', addressRoutes);
-app.use('/categories', categoryRoutes);
-app.use('/products', productRoutes);
-app.use('/orders', orderRoutes);
-app.use('/order-items', orderItemRoutes);
-app.use('/order-addresses', orderAddressRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/addresses', addressRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/order-items', orderItemRoutes);
+app.use('/api/order-addresses', orderAddressRoutes);
 
 // Error handling/logging
 // app.use((err, req, res, next) => { ... })
