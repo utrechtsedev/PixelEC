@@ -59,8 +59,6 @@ A production-ready backend system for ecommerce applications, designed to suppor
 
 ### Installation
 ```bash
-# Clone repository
-git clone https://github.com/yourusername/ecommerce-backend.git
 
 # Install dependencies
 npm install
