@@ -1,58 +1,75 @@
-# create-svelte
+# Pixel ECom 🛒
 
-Everything you need to build a Svelte library, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+**A Modular, Scalable Backend for Modern Ecommerce Applications**  
+**NOT YET USABLE - STILL IN HEAVY DEVELOPMENT | API DOCs not ready yet**
+*Built with Node.js, Express, SvelteKit & Sequelize & MariaDB | Fully Open Source & Free to Use*
 
-Read more about creating a library [in the docs](https://svelte.dev/docs/kit/packaging).
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://img.shields.io/travis/user/repo/master.svg?style=flat)](https://travis-ci.org/user/repo)
+[![Code Coverage](https://img.shields.io/codecov/c/github/user/repo.svg)](https://codecov.io/gh/user/repo)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://makeapullrequest.com)
 
-## Creating a project
+## 📜 Overview
 
-If you're seeing this, you've probably already done this step. Congrats!
+A production-ready backend system for ecommerce applications, designed to support:
+- **Small shops** (single product stores)
+- **Enterprise marketplaces** (multi-vendor, multi-brand)
+- **Hybrid models** (physical + digital goods)
+- **Global operations** (multi-currency, multi-language)
 
+
+## ✨ Features
+
+### Core Functionality
+- 🛍️ **Product Management**  
+  - Variants & Attributes
+  - Inventory Tracking
+  - Categories & Brand System
+- 💰 **Order Processing**  
+  - Transaction-safe Checkout
+  - Payment Gateway Integration
+  - Shipping Management
+- 👥 **User System**  
+  - JWT Authentication
+  - Role-based Access Control
+  - Address Book
+- 📊 **Analytics**  
+  - Sales Reporting
+  - Customer Insights
+  - Inventory Analytics
+
+### Advanced Capabilities
+- 🔄 **Webhook Support**  
+  - Real-time notifications
+  - Third-party integrations
+- 🌐 **Localization Ready**  
+  - Multi-language support
+  - Currency conversion
+- 🧩 **Modular Architecture**  
+  - Plugin system for extensions
+  - Microservices-ready design
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 16+
+- MariaDB 10.6+
+- Redis 6+ (for caching)
+- SMTP Server (for emails)
+
+### Installation
 ```bash
-# create a new project in the current directory
-npx sv create
+# Clone repository
+git clone https://github.com/yourusername/ecommerce-backend.git
 
-# create a new project in my-app
-npx sv create my-app
-```
+# Install dependencies
+npm install
 
-## Developing
+# Setup environment
+cp .env.example .env
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+# Run migrations
+npx sequelize-cli db:migrate
 
-```bash
+# Start server
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
-
-## Building
-
-To build your library:
-
-```bash
-npm run package
-```
-
-To create a production version of your showcase app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
-
-## Publishing
-
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
-
-To publish your library to [npm](https://www.npmjs.com):
-
-```bash
-npm publish
-```
