@@ -2,93 +2,36 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../config/db');
 
-class Category extends Model { };
-class CategoryImage extends Model { }
-
-CategoryImage.init(
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    category_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'categories',
-        key: 'category_id',
-      },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
-    },
-    image_url: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-      validate: {
-        notEmpty: true // Voeg extra validatie toe
-      }
-    },
+class Category extends Model {}
+Category.init({
+  category_id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true
   },
-  {
-    sequelize,
-    timestamps: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
-    modelName: 'CategoryImage',
-    tableName: 'category_images',
-    timestamps: true, // Enables automatic timestamps (createdAt, updatedAt)
-    underscored: true, // Uses snake_case column names
+  name: {
+    type: DataTypes.STRING(255),
+    allowNull: false
+  },
+  slug: {
+    type: DataTypes.STRING(255),
+    unique: true,
+    allowNull: false
+  },
+  description: DataTypes.TEXT,
+  image_url: DataTypes.STRING(255),
+  visible: {
+    type: DataTypes.ENUM('visible', 'invisible', 'unlisted'),
+    defaultValue: 'visible'
   }
-);
-
-Category.init(
-  {
-    category_id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
-    },
-    name: {
-      type: DataTypes.STRING(100),
-      allowNull: false
-    },
-    description: {
-      type: DataTypes.TEXT
-    },
-    parent_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    front_image_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'category_images',
-        key: 'id'
-      }
-    },
-  }, {
+}, {
   sequelize,
+  modelName: 'Category',
   tableName: 'categories',
-  timestamps: true,
+  paranoid: true,
   createdAt: 'created_at',
   updatedAt: 'updated_at',
-  paranoid: true
+  deletedAt: 'deleted_at'
 });
 
-
-Category.belongsTo(Category, {
-  as: 'ParentCategory',
-  foreignKey: 'parent_id'
-});
-Category.hasMany(Category, {
-  as: 'SubCategories',
-  foreignKey: 'parent_id'
-});
-
-Category.hasMany(CategoryImage, { foreignKey: 'category_id' });
-CategoryImage.belongsTo(Category, { foreignKey: 'category_id' });
-
-
-module.exports = { Category, CategoryImage };
+module.exports = Category;

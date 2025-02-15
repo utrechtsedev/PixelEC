@@ -52,7 +52,6 @@ declare module '$env/static/private' {
 	export const XDG_DATA_HOME_VSCODE_SNAP_ORIG: string;
 	export const GTK_IM_MODULE_FILE: string;
 	export const GIO_LAUNCHED_DESKTOP_FILE: string;
-	export const GNOME_SHELL_SESSION_MODE: string;
 	export const GTK_MODULES: string;
 	export const GSETTINGS_SCHEMA_DIR_VSCODE_SNAP_ORIG: string;
 	export const VSCODE_GIT_ASKPASS_MAIN: string;
@@ -71,6 +70,7 @@ declare module '$env/static/private' {
 	export const NVM_DIR: string;
 	export const DEBUGINFOD_URLS: string;
 	export const npm_config_metrics_registry: string;
+	export const QT_QPA_PLATFORMTHEME: string;
 	export const IM_CONFIG_PHASE: string;
 	export const WAYLAND_DISPLAY: string;
 	export const LOGNAME: string;
@@ -196,7 +196,6 @@ declare module '$env/dynamic/private' {
 		XDG_DATA_HOME_VSCODE_SNAP_ORIG: string;
 		GTK_IM_MODULE_FILE: string;
 		GIO_LAUNCHED_DESKTOP_FILE: string;
-		GNOME_SHELL_SESSION_MODE: string;
 		GTK_MODULES: string;
 		GSETTINGS_SCHEMA_DIR_VSCODE_SNAP_ORIG: string;
 		VSCODE_GIT_ASKPASS_MAIN: string;
@@ -215,6 +214,7 @@ declare module '$env/dynamic/private' {
 		NVM_DIR: string;
 		DEBUGINFOD_URLS: string;
 		npm_config_metrics_registry: string;
+		QT_QPA_PLATFORMTHEME: string;
 		IM_CONFIG_PHASE: string;
 		WAYLAND_DISPLAY: string;
 		LOGNAME: string;

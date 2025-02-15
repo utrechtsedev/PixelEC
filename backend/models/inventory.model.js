@@ -1,32 +1,31 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../config/db');
 
-class OrderItem extends Model {}
-OrderItem.init({
-  order_item_id: {
+class Inventory extends Model {}
+Inventory.init({
+  inventory_id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true
   },
-  quantity: {
+  stock_quantity: {
     type: DataTypes.INTEGER,
-    allowNull: false,
-    validate: { min: 1 }
-  },
-  price_at_purchase: {
-    type: DataTypes.DECIMAL(10, 2),
+    defaultValue: 0,
     allowNull: false
   },
-  attributes: DataTypes.JSON
+  low_stock_threshold: {
+    type: DataTypes.INTEGER,
+    defaultValue: 10
+  },
+  last_restocked: DataTypes.DATE
 }, {
   sequelize,
-  modelName: 'OrderItem',
-  tableName: 'order_items',
+  modelName: 'Inventory',
+  tableName: 'inventory',
   paranoid: true,
   createdAt: 'created_at',
   updatedAt: 'updated_at',
   deletedAt: 'deleted_at'
 });
 
-
-module.exports = OrderItem;
+module.exports = Inventory; 

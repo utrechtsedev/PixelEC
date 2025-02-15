@@ -1,36 +1,36 @@
-// models/Order.js
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../config/db');
-const User = require('./user.model');
 
-class Order extends Model {}
-Order.init({
-  order_id: {
+class Payment extends Model {}
+Payment.init({
+  payment_id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true
   },
-  total_amount: {
+  amount: {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false
   },
+  currency: {
+    type: DataTypes.STRING(3),
+    allowNull: false
+  },
+  payment_method: DataTypes.STRING(50),
   status: {
-    type: DataTypes.ENUM('pending', 'processing', 'shipped', 'delivered', 'cancelled'),
+    type: DataTypes.ENUM('pending', 'completed', 'failed', 'refunded'),
     defaultValue: 'pending'
   },
-  currency_code: {
-    type: DataTypes.STRING(3),
-    defaultValue: 'USD'
-  },
-  guest_checkout_data: DataTypes.JSON
+  transaction_id: DataTypes.STRING(255),
+  metadata: DataTypes.JSON
 }, {
   sequelize,
-  modelName: 'Order',
-  tableName: 'orders',
+  modelName: 'Payment',
+  tableName: 'payments',
   paranoid: true,
   createdAt: 'created_at',
   updatedAt: 'updated_at',
   deletedAt: 'deleted_at'
 });
 
-module.exports = Order;
+module.exports = Payment;  

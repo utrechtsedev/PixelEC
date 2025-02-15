@@ -1,28 +1,91 @@
 const { sequelize } = require('../config/db');
 
-const User = require('./user.model');
+// Import models from individual files
 const Address = require('./address.model');
-const { Category, CategoryImage } = require('./category.model');
-const { Product, ProductImage} = require('./product.model');
+const Attribute = require('./attribute.model');
+const AuditLog = require('./auditLog.model');
+const Brand = require('./brand.model');
+const Category = require('./category.model');
+const Inventory = require('./inventory.model');
 const Order = require('./order.model');
-const OrderItem = require('./orderitem.model');
 const OrderAddress = require('./orderaddress.model');
+const OrderItem = require('./orderitem.model');
+const Payment = require('./payment.model');
+const Product = require('./product.model');
+const productAttribute = require('./productAttribute.model');
+const ProductImage = require('./productImage.model');
+const ProductVariant = require('./productVariant.model');
+const User = require('./user.model');
+const Warehouse = require('./warehouse.model');
 
-// ASSOCIATIES hier (of in de static associate() van elk model):
-// User.hasMany(Address, { foreignKey: 'user_id' });
-// Address.belongsTo(User, { foreignKey: 'user_id' });
-// ... etc.
+const Product = require('./product.model');
 
-// Exporteer de modellen + sequelize
+// Define relationships
+Product.belongsTo(Brand);
+Brand.hasMany(Product);
+
+ProductVariant.belongsTo(Product);
+Product.hasMany(ProductVariant);
+
+Category.belongsTo(Category, { as: 'Parent', foreignKey: 'parent_category_id' });
+Category.hasMany(Category, { as: 'Children', foreignKey: 'parent_category_id' });
+
+Product.belongsToMany(Category, { through: 'product_categories' });
+Category.belongsToMany(Product, { through: 'product_categories' });
+
+Order.belongsTo(User);
+User.hasMany(Order);
+
+OrderItem.belongsTo(Order);
+Order.hasMany(OrderItem);
+
+OrderItem.belongsTo(ProductVariant);
+ProductVariant.hasMany(OrderItem);
+
+Payment.belongsTo(Order);
+Order.hasOne(Payment);
+
+Address.belongsTo(User);
+User.hasMany(Address);
+
+Warehouse.belongsTo(Address);
+Address.hasMany(Warehouse);
+
+Inventory.belongsTo(ProductVariant);
+ProductVariant.hasMany(Inventory);
+
+Inventory.belongsTo(Warehouse);
+Warehouse.hasMany(Inventory);
+
+Product.belongsToMany(Attribute, { through: ProductAttribute });
+Attribute.belongsToMany(Product, { through: ProductAttribute });
+
+AuditLog.belongsTo(User);
+User.hasMany(AuditLog);
+
+ProductImage.belongsTo(Product);
+Product.hasMany(ProductImage);
+
+ProductImage.belongsTo(ProductVariant);
+ProductVariant.hasMany(ProductImage);
+
+// Export models
 module.exports = {
   sequelize,
-  User,
   Address,
+  Attribute,
+  AuditLog,
+  Brand,
   Category,
-  CategoryImage,
-  Product,
-  ProductImage,
+  Inventory,
   Order,
+  OrderAddress,
   OrderItem,
-  OrderAddress
+  Payment,
+  Product,
+  productAttribute,
+  ProductImage,
+  ProductVariant,
+  User,
+  Warehouse
 };

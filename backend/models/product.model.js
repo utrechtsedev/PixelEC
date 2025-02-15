@@ -1,105 +1,46 @@
 // models/Product.js
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../config/db');
-const {Category} = require('./category.model');
+const Category = require('./category.model');
 
-class Product extends Model {};
-
-class ProductImage extends Model {}
-
-ProductImage.init(
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    product_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'products',
-        key: 'product_id',
-      },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
-    },
-    imageUrl: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-    },
-  },
-  {
-    sequelize,
-    modelName: 'ProductImage',
-    tableName: 'product_images',
-    timestamps: true,
-    underscored: true,
-  }
-);
-
-Product.init(
-  {
+class Product extends Model {}
+Product.init({
   product_id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true
-  },
-  category_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false
   },
   name: {
     type: DataTypes.STRING(255),
     allowNull: false
   },
-  description: {
-    type: DataTypes.TEXT
-  },
-  price: {
-    type: DataTypes.DECIMAL(10,2),
+  description: DataTypes.TEXT,
+  base_price: {
+    type: DataTypes.DECIMAL(10, 2),
     allowNull: false
   },
   sku: {
     type: DataTypes.STRING(100),
-    unique: true
+    unique: true,
+    allowNull: false
   },
-  stock: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    defaultValue: 0
+  type: {
+    type: DataTypes.ENUM('physical', 'digital', 'service'),
+    defaultValue: 'physical'
   },
-  front_image_id: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-    references: {
-      model: 'product_images',
-      key: 'id'
-    }
+  visible: {
+    type: DataTypes.ENUM('visible', 'invisible', 'unlisted'),
+    defaultValue: 'visible'
   }
 }, {
   sequelize,
+  modelName: 'Product',
   tableName: 'products',
-  timestamps: true,
+  paranoid: true,
   createdAt: 'created_at',
-  updatedAt: 'updated_at'
+  updatedAt: 'updated_at',
+  deletedAt: 'deleted_at'
 });
 
 
-
-
-Product.belongsTo(Category, { foreignKey: 'category_id' });
-Category.hasMany(Product, { foreignKey: 'category_id' });
-
-Product.hasMany(ProductImage, { foreignKey: 'product_id' });
-ProductImage.belongsTo(Product, { foreignKey: 'product_id' });
-
-module.exports = {Product, ProductImage};
+module.exports = Product;
