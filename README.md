@@ -1,4 +1,4 @@
-# Pixel ECom 🛒
+# Pixel 🛒
 
 **A Modular, Scalable Backend for Modern Ecommerce Applications**  
 **NOT YET USABLE - STILL IN HEAVY DEVELOPMENT | API DOCs not ready yet**
