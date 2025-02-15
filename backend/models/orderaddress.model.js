@@ -1,7 +1,6 @@
 // models/OrderAddress.js
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Order = require('./order.model');
 
 class OrderAddress extends Model {};
 
@@ -42,11 +41,5 @@ OrderAddress.init(
   timestamps: false
 }
 );
-// Relatie: één order kan (optioneel) meerdere adressen hebben
-OrderAddress.belongsTo(Order, { foreignKey: 'order_id' });
-Order.hasMany(OrderAddress, { foreignKey: 'order_id' });
-
-// Wil je precies één adres per order (bijv. alleen verzendadres)? Gebruik hasOne
-// Order.hasOne(OrderAddress, { foreignKey: 'order_id' });
 
 module.exports = OrderAddress;

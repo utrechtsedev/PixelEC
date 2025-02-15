@@ -21,8 +21,20 @@ Payment.init({
     type: DataTypes.ENUM('pending', 'completed', 'failed', 'refunded'),
     defaultValue: 'pending'
   },
-  transaction_id: DataTypes.STRING(255),
-  metadata: DataTypes.JSON
+  transaction_id: {
+    type: DataTypes.STRING(255)
+  },
+  metadata: {
+    type: DataTypes.JSON
+  },
+  refunded_amount: {
+    type: DataTypes.DECIMAL(10, 2),
+    defaultValue: 0.00
+  },
+  available_for_refund: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false
+  }
 }, {
   sequelize,
   modelName: 'Payment',

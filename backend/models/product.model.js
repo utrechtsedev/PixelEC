@@ -10,6 +10,11 @@ Product.init({
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true
   },
+  public_id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    unique: true
+  },
   name: {
     type: DataTypes.STRING(255),
     allowNull: false

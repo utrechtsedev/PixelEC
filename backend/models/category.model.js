@@ -13,6 +13,11 @@ Category.init({
     type: DataTypes.STRING(255),
     allowNull: false
   },
+  public_id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    unique: true
+  },
   slug: {
     type: DataTypes.STRING(255),
     unique: true,

@@ -12,13 +12,15 @@ const OrderAddress = require('./orderaddress.model');
 const OrderItem = require('./orderitem.model');
 const Payment = require('./payment.model');
 const Product = require('./product.model');
+const ProductAttribute = require('./productAttribute.model');
 const productAttribute = require('./productAttribute.model');
 const ProductImage = require('./productImage.model');
 const ProductVariant = require('./productVariant.model');
+const Refund = require('./refund.model');
+const RefundItem = require('./refundItem.model');
 const User = require('./user.model');
 const Warehouse = require('./warehouse.model');
 
-const Product = require('./product.model');
 
 // Define relationships
 Product.belongsTo(Brand);
@@ -68,6 +70,14 @@ Product.hasMany(ProductImage);
 
 ProductImage.belongsTo(ProductVariant);
 ProductVariant.hasMany(ProductImage);
+
+Refund.belongsTo(Order);
+Refund.belongsTo(Payment);
+Refund.belongsTo(User, { as: 'Processor', foreignKey: 'processed_by' });
+Refund.hasMany(RefundItem);
+
+RefundItem.belongsTo(Refund);
+RefundItem.belongsTo(OrderItem);
 
 // Export models
 module.exports = {

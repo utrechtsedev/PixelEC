@@ -11,5 +11,5 @@ const sequelize = new Sequelize(
     logging: false
   }
 );
-
+// TODO: More env variables to make compatible with all databases
 module.exports = {sequelize};
