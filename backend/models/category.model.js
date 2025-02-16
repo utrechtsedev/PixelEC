@@ -2,6 +2,7 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../config/db');
 
+
 class Category extends Model {}
 Category.init({
   category_id: {
@@ -38,5 +39,12 @@ Category.init({
   updatedAt: 'updated_at',
   deletedAt: 'deleted_at'
 });
+Category.associate = (models) => {
+  Category.belongsTo(models.Category, { as: 'Parent', foreignKey: 'parent_category_id' });
+  Category.hasMany(models.Category, { as: 'Children', foreignKey: 'parent_category_id' });
+  Category.hasMany(models.Product, {   as: 'Products', foreignKey: 'category_id'});
+};
+
+
 
 module.exports = Category;

@@ -1,7 +1,9 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../config/db');
 
+
 class ProductVariant extends Model {}
+
 ProductVariant.init({
   variant_id: {
     type: DataTypes.UUID,
@@ -28,5 +30,9 @@ ProductVariant.init({
   updatedAt: 'updated_at',
   deletedAt: 'deleted_at'
 });
-
+ProductVariant.associate = (models) => {
+  ProductVariant.hasMany(models.Inventory);
+  ProductVariant.belongsTo(models.Product, { foreignKey: 'ProductProductId' });
+  ProductVariant.hasMany(models.ProductImage, { foreignKey: 'ProductVariantVariantId' });
+}
 module.exports = ProductVariant;

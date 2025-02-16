@@ -2,6 +2,8 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../config/db');
 
+
+
 class User extends Model {}
 User.init({
   user_id: {
@@ -34,6 +36,10 @@ User.init({
   updatedAt: 'updated_at',
   deletedAt: 'deleted_at'
 });
+User.associate = (models) => {
 
-
+User.hasMany(models.Order);
+User.hasMany(models.Address);
+User.hasMany(models.AuditLog);
+}
 module.exports = User;

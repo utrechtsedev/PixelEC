@@ -28,5 +28,9 @@ Brand.init({
   updatedAt: 'updated_at',
   deletedAt: 'deleted_at'
 });
+Brand.associate = (models) => {
+
+Brand.hasMany(models.Product, {foreignKey: 'brand_id'});
+}
 
 module.exports = Brand;

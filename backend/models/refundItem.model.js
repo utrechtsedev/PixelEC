@@ -1,6 +1,7 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../config/db');
 
+
 class RefundItem extends Model {}
 
 RefundItem.init({
@@ -22,5 +23,9 @@ RefundItem.init({
     updatedAt: 'updated_at',
     deletedAt: 'deleted_at'
   });
+  RefundItem.associate = (models) => {
 
+  RefundItem.belongsTo(models.Refund);
+  RefundItem.belongsTo(models.OrderItem);
+  }
   module.exports = RefundItem;

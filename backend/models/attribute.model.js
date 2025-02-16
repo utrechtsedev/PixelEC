@@ -26,5 +26,9 @@ Attribute.init({
   updatedAt: 'updated_at',
   deletedAt: 'deleted_at'
 });
+Attribute.associate = (models) => {
+
+Attribute.belongsToMany(models.Product, { through: models.ProductAttribute });
+}
 
 module.exports = Attribute;

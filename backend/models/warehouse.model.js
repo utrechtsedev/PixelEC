@@ -1,6 +1,7 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../config/db');
 
+
 class Warehouse extends Model {}
 Warehouse.init({
   warehouse_id: {
@@ -21,5 +22,9 @@ Warehouse.init({
   updatedAt: 'updated_at',
   deletedAt: 'deleted_at'
 });
+Warehouse.associate = (models) => {
 
+Warehouse.belongsTo(models.Address);
+Warehouse.hasMany(models.Inventory);
+}
 module.exports = Warehouse;

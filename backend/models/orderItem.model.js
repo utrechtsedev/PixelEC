@@ -1,6 +1,7 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../config/db');
 
+
 class OrderItem extends Model {}
 OrderItem.init({
   order_item_id: {
@@ -27,6 +28,9 @@ OrderItem.init({
   updatedAt: 'updated_at',
   deletedAt: 'deleted_at'
 });
+OrderItem.associate = (models) => {
 
-
+OrderItem.belongsTo(models.Order);
+OrderItem.belongsTo(models.ProductVariant);
+}
 module.exports = OrderItem;

@@ -45,4 +45,10 @@ Payment.init({
   deletedAt: 'deleted_at'
 });
 
+Payment.associate = (models) => {
+  Payment.belongsTo(models.Order);
+}
+
+
+
 module.exports = Payment;  

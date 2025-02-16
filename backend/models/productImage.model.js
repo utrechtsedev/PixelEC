@@ -1,6 +1,8 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../config/db');
 
+
+
 class ProductImage extends Model {}
 ProductImage.init({
   image_id: {
@@ -30,5 +32,9 @@ ProductImage.init({
   updatedAt: 'updated_at',
   deletedAt: 'deleted_at'
 });
+ProductImage.associate = (models) => {
 
+ProductImage.belongsTo(models.Product);
+ProductImage.belongsTo(models.ProductVariant);
+}
 module.exports = ProductImage;

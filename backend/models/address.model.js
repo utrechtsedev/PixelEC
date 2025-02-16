@@ -1,7 +1,7 @@
 // models/Address.js
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../config/db');
-const User = require('./user.model');
+
 
 class Address extends Model {}
 Address.init({
@@ -40,5 +40,10 @@ Address.init({
   updatedAt: 'updated_at',
   deletedAt: 'deleted_at'
 });
+Address.associate = (models) => {
+  Address.belongsTo(models.User);
+  Address.hasMany(models.Warehouse);
+}
+
 
 module.exports = Address;

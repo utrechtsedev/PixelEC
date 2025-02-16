@@ -1,7 +1,7 @@
 // models/Order.js
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../config/db');
-const User = require('./user.model');
+
 
 class Order extends Model {}
 Order.init({
@@ -32,5 +32,10 @@ Order.init({
   updatedAt: 'updated_at',
   deletedAt: 'deleted_at'
 });
+Order.associate = (models) => {
 
+Order.belongsTo(models.User);
+Order.hasOne(models.Payment);
+Order.hasMany(models.OrderItem);
+}
 module.exports = Order;

@@ -31,5 +31,9 @@ AuditLog.init({
   updatedAt: 'updated_at',
   deletedAt: 'deleted_at'
 });
+AuditLog.associate = (models) => {
+
+AuditLog.belongsTo(models.User);
+}
 
 module.exports = AuditLog;

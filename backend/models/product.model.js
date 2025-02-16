@@ -1,7 +1,7 @@
 // models/Product.js
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Category = require('./category.model');
+
 
 class Product extends Model {}
 Product.init({
@@ -14,6 +14,22 @@ Product.init({
     type: DataTypes.INTEGER,
     autoIncrement: true,
     unique: true
+  },
+  category_id: {
+    type: DataTypes.UUID, 
+    allowNull: true, 
+    references: {
+      model: 'categories',
+      key: 'category_id'
+    }
+  },
+  brand_id: {
+    type: DataTypes.UUID, 
+    allowNull: true, 
+    references: {
+      model: 'brands',
+      key: 'brand_id'
+    }
   },
   name: {
     type: DataTypes.STRING(255),
@@ -46,6 +62,13 @@ Product.init({
   updatedAt: 'updated_at',
   deletedAt: 'deleted_at'
 });
+Product.associate = (models) => {
 
+Product.belongsTo(models.Brand, {foreignKey: 'brand_id'});
+Product.hasMany(models.ProductVariant, { foreignKey: 'ProductProductId' });
+Product.belongsToMany(models.Attribute, { through: models.ProductAttribute });
+Product.hasMany(models.ProductImage);
+Product.belongsTo(models.Category, {as: 'Category',foreignKey: 'category_id'});
+}
 
 module.exports = Product;

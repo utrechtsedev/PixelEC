@@ -11,23 +11,16 @@ app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // more in the ./middlewares directory
 
-// Routes
-const userRoutes = require('./routes/users.routes');
-const addressRoutes = require('./routes/addresses.routes');
-const categoryRoutes = require('./routes/categories.routes');
-const productRoutes = require('./routes/products.routes');
-const orderRoutes = require('./routes/orders.routes');
-const orderItemRoutes = require('./routes/orderItems.routes');
-const orderAddressRoutes = require('./routes/orderAddresses.routes');
+// Normal routes
+const productRoutes = require('./routes/products.routes.js');
+
+// Admin routes
+const adminProductRoutes = require('./routes/admin/products.routes.js'); 
 
 // Mounted routes
-app.use('/api/users', userRoutes);
-app.use('/api/addresses', addressRoutes);
-app.use('/api/categories', categoryRoutes);
 app.use('/api/products', productRoutes);
-app.use('/api/orders', orderRoutes);
-app.use('/api/order-items', orderItemRoutes);
-app.use('/api/order-addresses', orderAddressRoutes);
+app.use('/api/admin/products', adminProductRoutes);
+
 
 // Error handling/logging
 // app.use((err, req, res, next) => { ... })
@@ -41,7 +34,7 @@ app.use('/api/order-addresses', orderAddressRoutes);
 
     // Synchroniseer modellen (pas 'force' aan naar behoefte)
     // force: true wist en hermaakt alle tabellen => alleen handig in dev!
-    await sequelize.sync({ alter:true});
+    await sequelize.sync({ alter: true });
     console.log('Database modellen gesynchroniseerd!');
     
     // 8. Start de server
