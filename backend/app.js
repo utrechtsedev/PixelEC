@@ -23,7 +23,6 @@ app.use('/api/admin/products', adminProductRoutes);
 
 
 // Error handling/logging
-// app.use((err, req, res, next) => { ... })
 
 // Database syncing
 (async () => {

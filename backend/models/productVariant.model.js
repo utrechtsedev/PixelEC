@@ -20,7 +20,18 @@ ProductVariant.init({
     type: DataTypes.INTEGER,
     defaultValue: 0
   },
-  attributes: DataTypes.JSON
+  size: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  weight: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  color: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 }, {
   sequelize,
   modelName: 'ProductVariant',

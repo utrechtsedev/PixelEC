@@ -1,7 +1,7 @@
 const { Op } = require('sequelize');
 const { sequelize, models } = require('../models');
 
-
+// TODO: implement visibility logic
 // Fetch all products with 2 optional filters ?category=slug&brand=slug
 exports.getProducts = async (req, res) => {
   try {
@@ -36,7 +36,8 @@ exports.getProducts = async (req, res) => {
       {
         model: models.ProductVariant,
         as: 'ProductVariants',
-        attributes: ['variant_id', 'sku'],
+        // Include attributes column here
+        attributes: ['variant_id', 'sku', 'size', 'weight', 'color'], // 🟡 Added 'attributes'
         required: false
       },
       {
@@ -47,6 +48,7 @@ exports.getProducts = async (req, res) => {
         required: false
       }
     ];
+
     const { count, rows: products } = await models.Product.findAndCountAll({
       include,
       distinct: true,
@@ -62,17 +64,46 @@ exports.getProducts = async (req, res) => {
   }
 };
 
-// Fetch one product
-exports.getProductById = async (req, res) => {
-  try {
-    const product = await models.Product.findOne({where: {public_id: req.params.id}});
-    if (product) {
-      res.json(product);
-    } else {
-      res.status(404).json({ message: 'Product not found' });
-    }
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}
+// // Fetch one product
+// exports.getProductById = async (req, res) => {
+//   try {
+//     const product = await models.Product.findOne({
+//       where: { public_id: req.params.id },
+//       include: [ // 🟡 Added include for variants with attributes
+//         {
+//           model: models.ProductVariant,
+//           as: 'ProductVariants',
+//           attributes: ['variant_id', 'sku', 'attributes'] // 🟡 Added 'attributes'
+//         },
+//         {
+//           model: models.ProductImage,
+//           as: 'ProductImages',
+//           attributes: ['image_id', 'url']
+//         }
+//       ]
+//     });
+    
+//     if (product) {
+//       res.json(product);
+//     } else {
+//       res.status(404).json({ message: 'Product not found' });
+//     }
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
+// // Fetch one product
+// exports.getProductById = async (req, res) => {
+//   try {
+//     const product = await models.Product.findOne({where: {public_id: req.params.id}});
+//     if (product) {
+//       res.json(product);
+//     } else {
+//       res.status(404).json({ message: 'Product not found' });
+//     }
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// }
 

@@ -3,7 +3,6 @@ const { sequelize } = require('../config/db');
 // Import models from individual files
 const Brand = require('./brand.model');
 const Category = require('./category.model');
-const Attribute = require('./attribute.model');
 const User = require('./user.model');
 const Address = require('./address.model');
 const Warehouse = require('./warehouse.model');
@@ -16,12 +15,10 @@ const Refund = require('./refund.model');
 const RefundItem = require('./refundItem.model');
 const Inventory = require('./inventory.model');
 const ProductImage = require('./productImage.model');
-const ProductAttribute = require('./productAttribute.model');
 const AuditLog = require('./auditLog.model');
 const OrderAddress = require('./orderAddress.model');
 
 const models = {
-  Attribute,
   Brand,
   User,
   Address,
@@ -30,7 +27,6 @@ const models = {
   Product, 
   ProductVariant,
   ProductImage,
-  ProductAttribute,
   Inventory,
   OrderAddress,
   Order,
@@ -56,7 +52,6 @@ module.exports = {
   Refund,
   RefundItem,
   Address,
-  Attribute,
   AuditLog,
   Brand,
   Category,
@@ -66,7 +61,6 @@ module.exports = {
   OrderItem,
   Payment,
   Product,
-  ProductAttribute,
   ProductImage,
   ProductVariant,
   User,

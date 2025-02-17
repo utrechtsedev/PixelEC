@@ -66,7 +66,6 @@ Product.associate = (models) => {
 
 Product.belongsTo(models.Brand, {foreignKey: 'brand_id'});
 Product.hasMany(models.ProductVariant, { foreignKey: 'ProductProductId' });
-Product.belongsToMany(models.Attribute, { through: models.ProductAttribute });
 Product.hasMany(models.ProductImage);
 Product.belongsTo(models.Category, {as: 'Category',foreignKey: 'category_id'});
 }
