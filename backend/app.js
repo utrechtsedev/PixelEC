@@ -13,13 +13,21 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Normal routes
 const productRoutes = require('./routes/products.routes.js');
+const categoryRoutes = require('./routes/categories.routes.js')
 
 // Admin routes
-const adminProductRoutes = require('./routes/admin/products.routes.js'); 
+const adminProductRoutes = require('./routes/admin/products.routes.js');
+const adminCategoryRoutes = require('./routes/admin/categories.routes.js'); 
+const adminBrandRoutes = require('./routes/admin/brands.routes.js')
 
 // Mounted routes
 app.use('/api/products', productRoutes);
+app.use('/api/category', categoryRoutes)
+
+//admin routes
 app.use('/api/admin/products', adminProductRoutes);
+app.use('/api/admin/categories', adminCategoryRoutes);
+app.use('/api/admin/brands', adminBrandRoutes)
 
 
 // Error handling/logging
@@ -27,16 +35,12 @@ app.use('/api/admin/products', adminProductRoutes);
 // Database syncing
 (async () => {
   try {
-    // Test de verbinding
     await sequelize.authenticate();
     console.log('Succesvol verbonden met de database.');
 
-    // Synchroniseer modellen (pas 'force' aan naar behoefte)
-    // force: true wist en hermaakt alle tabellen => alleen handig in dev!
-    await sequelize.sync({ alter: true });
+    await sequelize.sync({  });
     console.log('Database modellen gesynchroniseerd!');
     
-    // 8. Start de server
     const PORT = process.env.PORT;
     app.listen(PORT, () => {
       console.log(`Server draait op poort ${PORT}`);

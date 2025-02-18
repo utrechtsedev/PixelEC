@@ -42,7 +42,6 @@ Address.init({
 });
 Address.associate = (models) => {
   Address.belongsTo(models.User);
-  Address.hasMany(models.Warehouse);
 }
 
 

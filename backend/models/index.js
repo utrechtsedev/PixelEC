@@ -5,7 +5,6 @@ const Brand = require('./brand.model');
 const Category = require('./category.model');
 const User = require('./user.model');
 const Address = require('./address.model');
-const Warehouse = require('./warehouse.model');
 const Product = require('./product.model');
 const ProductVariant = require('./productVariant.model');
 const Order = require('./order.model');
@@ -22,7 +21,6 @@ const models = {
   Brand,
   User,
   Address,
-  Warehouse,
   Category,
   Product, 
   ProductVariant,
@@ -64,5 +62,4 @@ module.exports = {
   ProductImage,
   ProductVariant,
   User,
-  Warehouse
 };

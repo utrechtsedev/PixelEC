@@ -64,46 +64,52 @@ exports.getProducts = async (req, res) => {
   }
 };
 
-// // Fetch one product
-// exports.getProductById = async (req, res) => {
-//   try {
-//     const product = await models.Product.findOne({
-//       where: { public_id: req.params.id },
-//       include: [ // 🟡 Added include for variants with attributes
-//         {
-//           model: models.ProductVariant,
-//           as: 'ProductVariants',
-//           attributes: ['variant_id', 'sku', 'attributes'] // 🟡 Added 'attributes'
-//         },
-//         {
-//           model: models.ProductImage,
-//           as: 'ProductImages',
-//           attributes: ['image_id', 'url']
-//         }
-//       ]
-//     });
+// Fetch one product
+exports.getProductById = async (req, res) => {
+  try {
+    const product = await models.Product.findOne({
+      where: { public_id: req.params.id },
+      include: [ 
+        {
+          model: models.ProductVariant,
+          as: 'ProductVariants',
+          attributes: ['variant_id', 'sku'],
+          include: [
+            {
+              model: models.ProductImage,
+              as: 'ProductImages',
+              attributes:  ['image_id', 'url', 'alt_text', 'is_primary'],
+            }
+          ],
+        },
+        {
+          model: models.ProductImage,
+          as: 'ProductImages',
+          attributes: ['image_id', 'url']
+        }
+      ]
+    });
     
-//     if (product) {
-//       res.json(product);
-//     } else {
-//       res.status(404).json({ message: 'Product not found' });
-//     }
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
+    if (product) {
+      res.json(product);
+    } else {
+      res.status(404).json({ message: 'Product not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
-// // Fetch one product
-// exports.getProductById = async (req, res) => {
-//   try {
-//     const product = await models.Product.findOne({where: {public_id: req.params.id}});
-//     if (product) {
-//       res.json(product);
-//     } else {
-//       res.status(404).json({ message: 'Product not found' });
-//     }
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// }
+// upload one or more product images
+exports.uploadProductImages = async (req, res) => {
 
+}
+
+// Upload one or more product variant images
+exports.uploadVariantImages = async (req, res) => {
+
+}
+
+exports.uploadProductImage = async (req, res) => {
+
+}

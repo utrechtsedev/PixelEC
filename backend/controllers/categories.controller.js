@@ -1,9 +1,10 @@
-const Category = require('../models/category.model');
+const { Op } = require('sequelize');
+const { sequelize, models } = require('../models');
 
 // Fetch all categories
 exports.getCategories = async (req, res) => {
     try {
-        const categories = await Category.findAll();
+        const categories = await models.Category.findAll();
         return res.json(categories);
     }
     catch (error) {
@@ -14,11 +15,11 @@ exports.getCategories = async (req, res) => {
 // Fetch one category
 exports.getCategoryById = async (req, res) => {
   try {
-    const categories = await Category.findOne({where: {public_id: req.params.id}});
+    const categories = await models.Category.findOne({where: {public_id: req.params.id}});
     if (categories) {
       res.json(categories);
     } else {
-      res.status(404).json({ message: 'Product not found' });
+      res.status(404).json({ message: 'Category not found' });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });

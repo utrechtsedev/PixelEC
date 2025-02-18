@@ -31,7 +31,6 @@ Inventory.init({
 });
 Inventory.associate = (models) => {
 
-Inventory.belongsTo(models.Warehouse);
 Inventory.belongsTo(models.ProductVariant);
 }
 module.exports = Inventory; 
