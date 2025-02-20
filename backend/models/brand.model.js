@@ -17,6 +17,11 @@ Brand.init({
     unique: true,
     allowNull: false
   },
+  public_id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    unique: true
+  },
   logo_url: DataTypes.STRING(255),
   description: DataTypes.TEXT
 }, {

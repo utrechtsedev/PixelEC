@@ -30,6 +30,10 @@ Address.init({
   is_primary: {
     type: DataTypes.BOOLEAN,
     defaultValue: false
+  },
+  address_type: {
+    type: DataTypes.ENUM('billing', 'shipping'),
+    allowNull: false
   }
 }, {
   sequelize,

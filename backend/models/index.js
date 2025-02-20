@@ -16,6 +16,8 @@ const Inventory = require('./inventory.model');
 const ProductImage = require('./productImage.model');
 const AuditLog = require('./auditLog.model');
 const OrderAddress = require('./orderAddress.model');
+const Cart = require('./cart.model');
+const CartItem = require('./cartItem.model')
 
 const models = {
   Brand,
@@ -32,7 +34,9 @@ const models = {
   Payment,
   Refund,
   RefundItem,
-  AuditLog
+  AuditLog,
+  Cart,
+  CartItem,
 };
 
 Object.values(models).forEach(model => {
@@ -44,22 +48,4 @@ Object.values(models).forEach(model => {
 
 
 // Export models
-module.exports = {
-  sequelize,
-  models,
-  Refund,
-  RefundItem,
-  Address,
-  AuditLog,
-  Brand,
-  Category,
-  Inventory,
-  Order,
-  OrderAddress,
-  OrderItem,
-  Payment,
-  Product,
-  ProductImage,
-  ProductVariant,
-  User,
-};
+module.exports = {models, sequelize};

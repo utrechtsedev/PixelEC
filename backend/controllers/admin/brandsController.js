@@ -1,5 +1,4 @@
-const { Op } = require('sequelize');
-const { sequelize, models } = require('../../models');
+const { models } = require('../../models');
 
 exports.createBrand = async (req, res) => {
     let {name, slug} = req.body
