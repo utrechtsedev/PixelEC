@@ -11,11 +11,20 @@ Refund.init({
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
     },
-    amount: DataTypes.DECIMAL(10, 2),
+    amount: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: true,
+    },
     currency: DataTypes.STRING(3),
-    status: DataTypes.ENUM('requested', 'approved', 'processed', 'rejected'),
+    status: {
+      type: DataTypes.ENUM('requested', 'approved', 'processed', 'rejected'),
+      defaultValue: 'requested'
+    },
     reason: DataTypes.TEXT,
-    restock_items: DataTypes.BOOLEAN,
+    restock_items: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
+    },
     refund_method: DataTypes.ENUM('original', 'credit', 'other')
   }, {
     sequelize,

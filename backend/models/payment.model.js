@@ -18,7 +18,7 @@ Payment.init({
   },
   payment_method: DataTypes.STRING(50),
   status: {
-    type: DataTypes.ENUM('pending', 'completed', 'failed', 'refunded'),
+    type: DataTypes.ENUM('pending', 'completed', 'failed', 'refunded', 'partialrefund'),
     defaultValue: 'pending'
   },
   transaction_id: {

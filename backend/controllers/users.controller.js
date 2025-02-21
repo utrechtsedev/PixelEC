@@ -2,17 +2,14 @@ const { Op } = require('sequelize');
 const { sequelize, models } = require('../models');
 const bcrypt = require('bcrypt')
 
-
-
-
 exports.login = async (req, res) => {
     const {email, password} = req.body;
-    if (!email || password) {return res.status(401).json({error: "No email or password supplied"})}
+    if (!email || !password) {return res.status(401).json({error: "No email or password supplied"})}
 
     const user = await models.User.findOne({where: {email: email}})
-    if (!user) {return res.status(401).json({error: "User not found"})}
+    if (!user) {return res.status(401).json({error: "Email or password incorrect"})}
 
-    const Match = await bcrypt.compare(password, user.password)
+    const Match = await bcrypt.compare(password, user.password_hash)
     if (!Match) {return res.status(401).json({error: "Email or password incorrect"})}
 
     req.session.user_id = user.user_id

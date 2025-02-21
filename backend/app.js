@@ -36,26 +36,32 @@ app.use((req, res, next) => {
 // more in the ./middlewares directory
 
 // Normal routes
-const productRoutes = require('./routes/products.routes.js');
 const categoryRoutes = require('./routes/categories.routes.js');
+const productRoutes = require('./routes/products.routes.js');
+const refundRoutes = require('./routes/refunds.routes.js');
 const brandRoutes = require('./routes/brands.routes.js');
+const orderRoutes = require('./routes/orders.routes.js');
 const cartRoutes = require('./routes/carts.routes.js');
+const userRoutes = require('./routes/users.routes.js');
 
 // Admin routes
-const adminProductRoutes = require('./routes/admin/products.routes.js');
 const adminCategoryRoutes = require('./routes/admin/categories.routes.js'); 
+const adminProductRoutes = require('./routes/admin/products.routes.js');
 const adminBrandRoutes = require('./routes/admin/brands.routes.js');
 const adminUserRoutes = require('./routes/admin/users.routes.js');
 
 // Mounted routes
+app.use('/api/categories', categoryRoutes);
 app.use('/api/products', productRoutes);
-app.use('/api/category', categoryRoutes);
+app.use('/api/refunds', refundRoutes);
 app.use('/api/brands', brandRoutes);
-app.use('/api/cart', cartRoutes)
+app.use('/api/orders', orderRoutes);
+app.use('/api/carts', cartRoutes);
+app.use('/api', userRoutes);
 
 //admin routes
-app.use('/api/admin/products', adminProductRoutes);
 app.use('/api/admin/categories', adminCategoryRoutes);
+app.use('/api/admin/products', adminProductRoutes);
 app.use('/api/admin/brands', adminBrandRoutes);
 app.use('/api/admin/users', adminUserRoutes);
 
@@ -69,10 +75,9 @@ app.use('/api/admin/users', adminUserRoutes);
     await sequelize.authenticate();
     console.log('Succesfully connected to the database.');
 
-    // Synchroniseer modellen (pas 'force' aan naar behoefte)
-    // force: true wist en hermaakt alle tabellen => alleen handig in dev!
-    await sequelize.sync({  });
-    await sessionStore.sync()
+    // sync the database with current ./models (apply force: true or alter: true in case of changes)
+    await sequelize.sync({ /* force: true */ });
+    sessionStore.sync()
     console.log('Database models have been synced!');
     
     // Start the server
@@ -83,6 +88,6 @@ app.use('/api/admin/users', adminUserRoutes);
 
   } catch (error) {
     console.error('Cannot connect to the database:', error);
-    process.exit(1); // Sluit af als de DB-verbinding niet lukt
+    process.exit(1); // Close connection if database connection error.
   }
 })();

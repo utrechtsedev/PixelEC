@@ -34,7 +34,12 @@ User.init({
     defaultValue: true
   },
   phone_number: DataTypes.STRING(20),
-  avatar_url: DataTypes.STRING(255)
+  avatar_url: DataTypes.STRING(255),
+  role: {
+    type: DataTypes.ENUM('admin', 'user'),
+    defaultValue: 'user',
+    allowNull: false
+  },
 }, {
   sequelize,
   modelName: 'User',

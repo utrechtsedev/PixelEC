@@ -17,24 +17,27 @@ export const nodes = [
 	() => import('./nodes/13'),
 	() => import('./nodes/14'),
 	() => import('./nodes/15'),
-	() => import('./nodes/16')
+	() => import('./nodes/16'),
+	() => import('./nodes/17'),
+	() => import('./nodes/18')
 ];
 
 export const server_loads = [3];
 
 export const dictionary = {
-		"/(dashboard)/dashboard": [~5,[2]],
-		"/(dashboard)/dashboard/account": [6,[2]],
-		"/(dashboard)/dashboard/categories": [7,[2,3]],
-		"/(dashboard)/dashboard/categories/create": [8,[2,3]],
-		"/(dashboard)/dashboard/categories/edit/[id]": [9,[2,3]],
-		"/(dashboard)/dashboard/customers": [10,[2]],
-		"/(dashboard)/dashboard/discounts": [11,[2]],
-		"/(dashboard)/dashboard/finances": [12,[2]],
-		"/(dashboard)/dashboard/insights": [13,[2]],
-		"/(dashboard)/dashboard/orders": [14,[2]],
-		"/(dashboard)/dashboard/products": [15,[2,4]],
-		"/(dashboard)/dashboard/settings": [16,[2]]
+		"/(home)": [18,[5]],
+		"/(dashboard)/dashboard": [~6,[2]],
+		"/(dashboard)/dashboard/account": [7,[2]],
+		"/(dashboard)/dashboard/categories": [8,[2,3]],
+		"/(dashboard)/dashboard/categories/create": [9,[2,3]],
+		"/(dashboard)/dashboard/categories/edit/[id]": [10,[2,3]],
+		"/(dashboard)/dashboard/customers": [11,[2]],
+		"/(dashboard)/dashboard/discounts": [12,[2]],
+		"/(dashboard)/dashboard/finances": [13,[2]],
+		"/(dashboard)/dashboard/insights": [14,[2]],
+		"/(dashboard)/dashboard/orders": [15,[2]],
+		"/(dashboard)/dashboard/products": [16,[2,4]],
+		"/(dashboard)/dashboard/settings": [17,[2]]
 	};
 
 export const hooks = {

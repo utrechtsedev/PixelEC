@@ -43,6 +43,7 @@ declare module '$env/static/private' {
 	export const HOME: string;
 	export const CHROME_DESKTOP: string;
 	export const LOCPATH_VSCODE_SNAP_ORIG: string;
+	export const OLDPWD: string;
 	export const TERM_PROGRAM_VERSION: string;
 	export const DESKTOP_SESSION: string;
 	export const GTK_PATH: string;
@@ -55,7 +56,6 @@ declare module '$env/static/private' {
 	export const GTK_MODULES: string;
 	export const GSETTINGS_SCHEMA_DIR_VSCODE_SNAP_ORIG: string;
 	export const VSCODE_GIT_ASKPASS_MAIN: string;
-	export const NIX_PROFILES: string;
 	export const VSCODE_GIT_ASKPASS_NODE: string;
 	export const MANAGERPID: string;
 	export const npm_config_userconfig: string;
@@ -70,7 +70,6 @@ declare module '$env/static/private' {
 	export const NVM_DIR: string;
 	export const DEBUGINFOD_URLS: string;
 	export const npm_config_metrics_registry: string;
-	export const QT_QPA_PLATFORMTHEME: string;
 	export const IM_CONFIG_PHASE: string;
 	export const WAYLAND_DISPLAY: string;
 	export const LOGNAME: string;
@@ -121,7 +120,6 @@ declare module '$env/static/private' {
 	export const LESSCLOSE: string;
 	export const GTK_PATH_VSCODE_SNAP_ORIG: string;
 	export const FONTCONFIG_FILE: string;
-	export const NIX_SSL_CERT_FILE: string;
 	export const GTK_IM_MODULE_FILE_VSCODE_SNAP_ORIG: string;
 	export const GJS_DEBUG_OUTPUT: string;
 	export const VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
@@ -187,6 +185,7 @@ declare module '$env/dynamic/private' {
 		HOME: string;
 		CHROME_DESKTOP: string;
 		LOCPATH_VSCODE_SNAP_ORIG: string;
+		OLDPWD: string;
 		TERM_PROGRAM_VERSION: string;
 		DESKTOP_SESSION: string;
 		GTK_PATH: string;
@@ -199,7 +198,6 @@ declare module '$env/dynamic/private' {
 		GTK_MODULES: string;
 		GSETTINGS_SCHEMA_DIR_VSCODE_SNAP_ORIG: string;
 		VSCODE_GIT_ASKPASS_MAIN: string;
-		NIX_PROFILES: string;
 		VSCODE_GIT_ASKPASS_NODE: string;
 		MANAGERPID: string;
 		npm_config_userconfig: string;
@@ -214,7 +212,6 @@ declare module '$env/dynamic/private' {
 		NVM_DIR: string;
 		DEBUGINFOD_URLS: string;
 		npm_config_metrics_registry: string;
-		QT_QPA_PLATFORMTHEME: string;
 		IM_CONFIG_PHASE: string;
 		WAYLAND_DISPLAY: string;
 		LOGNAME: string;
@@ -265,7 +262,6 @@ declare module '$env/dynamic/private' {
 		LESSCLOSE: string;
 		GTK_PATH_VSCODE_SNAP_ORIG: string;
 		FONTCONFIG_FILE: string;
-		NIX_SSL_CERT_FILE: string;
 		GTK_IM_MODULE_FILE_VSCODE_SNAP_ORIG: string;
 		GJS_DEBUG_OUTPUT: string;
 		VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
