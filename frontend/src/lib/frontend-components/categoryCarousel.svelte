@@ -3,9 +3,9 @@
 
     const categories = [
         { id: 1, name: "Rings", image: "//new-ella-demo.myshopify.com/cdn/shop/files/brand-slider-1.jpg?v=1686192818" },
-        { id: 2, name: "Necklaces", image: "/images/necklaces.jpg" },
-        { id: 3, name: "Bracelets", image: "/images/bracelets.jpg" },
-        { id: 4, name: "Earrings", image: "/images/earrings.jpg" },
+        { id: 2, name: "Necklaces", image: "img/23-1M902055_SGP_9_b2b-c.webp" },
+        { id: 3, name: "Bracelets", image: "img/Heart-shape-gold-diamond-ring-on-transparent-background-PNG.png" },
+        { id: 4, name: "Earrings", image: "img/Silver-Bracelet-Transparent.png" },
         { id: 5, name: "Pendants", image: "/images/pendants.jpg" },
         { id: 6, name: "Watches", image: "/images/watches.jpg" },
         { id: 7, name: "Brooches", image: "/images/brooches.jpg" },
@@ -68,7 +68,7 @@
             <!-- Categories Container - full width -->
             <div bind:this={scrollContainer} class="flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 lg:mx-0">
                 {#each categories as category (category.id)}
-                    <div class="card card-compact w-[15%] flex-shrink-0 snap-center bg-base-100 group">
+                    <div class="card card-compact w-[45%] md:w-[30%] xl:w-[15%] flex-shrink-0 snap-center bg-base-100 group">
                         <figure>
                             <img src={category.image} alt={category.name} class="h-48 w-full object-cover object-cover transition-transform duration-300 hover:-translate-y-2 hover:border-b-4 border-black"/>
                         </figure>
