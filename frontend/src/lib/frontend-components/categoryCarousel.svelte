@@ -17,9 +17,15 @@
         { id: 13, name: "Brooches", image: "/images/brooches.jpg" },
     ];
 
+    const allCategories = [...categories, ...categories, ...categories].map((c, index) => ({
+        ...c,
+        uniqueId: index
+    }));
+
     let scrollContainer;
-    let scrollAmount = 0;
-    const cardWidth = 200; // Adjust based on your design
+    let virtualScroll = 0;
+    let W;
+    const cardWidth = 200;
 
     const getScrollDistance = () => {
         return window.innerWidth < 768 ? cardWidth : cardWidth * 2;
@@ -27,34 +33,41 @@
 
     const scrollLeft = () => {
         const distance = getScrollDistance();
-        scrollAmount = Math.max(0, scrollAmount - distance);
-        scrollContainer.scrollTo({ left: scrollAmount, behavior: "smooth" });
+        virtualScroll -= distance;
+        updateScrollPosition();
     };
 
     const scrollRight = () => {
         const distance = getScrollDistance();
-        const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-        scrollAmount = Math.min(maxScroll, scrollAmount + distance);
-        scrollContainer.scrollTo({ left: scrollAmount, behavior: "smooth" });
+        virtualScroll += distance;
+        updateScrollPosition();
+    };
+
+    const updateScrollPosition = () => {
+        const offset = ((virtualScroll % W) + W) % W;
+        const actualScroll = W + offset;
+        scrollContainer.scrollTo({ left: actualScroll, behavior: "smooth" });
     };
 
     onMount(() => {
+        W = scrollContainer.scrollWidth / 3;
+        virtualScroll = 0;
+        scrollContainer.scrollLeft = W;
+
         const handleResize = () => {
-            const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-            scrollAmount = Math.min(scrollAmount, maxScroll);
+            W = scrollContainer.scrollWidth / 3;
+            const offset = ((virtualScroll % W) + W) % W;
+            scrollContainer.scrollLeft = W + offset;
         };
-        
+
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     });
 </script>
 
 <section class="py-12 w-full md:px-12">
-    <!-- Removed all container classes and added full-width specific classes -->
     <div class="w-full px-4 md:px-8 lg:px-0">
-        <!-- <h2 class="text-3xl font-bold text-center mb-8">Shop by Category</h2> -->
         <div class="relative w-full">
-            <!-- Left Arrow - adjusted positioning -->
             <button 
                 aria-label="left-button" 
                 class="btn btn-circle btn-ghost border border-white absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10" 
@@ -64,23 +77,33 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
             </button>
-
-            <!-- Categories Container - full width -->
-            <div bind:this={scrollContainer} class="flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 lg:mx-0">
-                {#each categories as category (category.id)}
-                    <div class="card card-compact w-[45%] md:w-[30%] xl:w-[15%] flex-shrink-0 snap-center bg-base-100 group">
-                        <figure>
-                            <img src={category.image} alt={category.name} class="h-48 w-full object-cover object-cover transition-transform duration-300 hover:-translate-y-2 hover:border-b-4 border-black"/>
-                        </figure>
-                        <div class="card-body items-center gap-[0px]">
-                            <h3 class="card-title text-lg group-hover:underline group-hover:text-info">{category.name}</h3>
-                            <p class="text-lg">Shop now</p>
-                        </div>
-                    </div>
-                {/each}
+            <script>
+                let scrollContainer;
+              </script>
+              
+              <div
+              bind:this={scrollContainer}
+              class="flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 lg:mx-0"
+            >
+              {#each allCategories as category (category.uniqueId)}
+                <div
+                  class="card card-compact w-[45%] md:w-[30%] xl:w-[15%] flex-shrink-0 snap-center bg-base-100 group"
+                >
+                  <figure class="relative h-48 w-full overflow-hidden">
+                    <img
+                      src={category.image}
+                      alt={category.name}
+                      class="h-full w-full object-contain transition-transform duration-300 group-hover:-translate-y-2 group-hover:border-b-4 border-black"
+                    />
+                  </figure>
+                  <div class="card-body items-center gap-[0px]">
+                    <h3 class="card-title text-lg group-hover:underline group-hover:text-info">{category.name}</h3>
+                    <p class="text-lg">Shop now</p>
+                  </div>
+                </div>
+              {/each}
             </div>
 
-            <!-- Right Arrow - adjusted positioning -->
             <button 
                 aria-label="right-button" 
                 class="btn btn-circle btn-ghost border border-white absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10" 
@@ -95,7 +118,6 @@
 </section>
 
 <style>
-    /* Hide scrollbar for better aesthetics */
     .scrollbar-hide::-webkit-scrollbar {
         display: none;
     }
@@ -105,7 +127,6 @@
         scrollbar-width: none;
     }
 
-    /* Ensure full width on large screens */
     @media (min-width: 1024px) {
         section {
             margin-left: calc(-50vw + 50%);
