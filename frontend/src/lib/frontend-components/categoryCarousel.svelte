@@ -70,7 +70,7 @@
         <div class="relative w-full">
             <button 
                 aria-label="left-button" 
-                class="btn btn-circle btn-ghost border border-white absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10" 
+                class="btn btn-circle btn-ghost border absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10" 
                 on:click={scrollLeft}
             >
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,7 +106,7 @@
 
             <button 
                 aria-label="right-button" 
-                class="btn btn-circle btn-ghost border border-white absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10" 
+                class="btn btn-circle btn-ghost absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10" 
                 on:click={scrollRight}
             >
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
