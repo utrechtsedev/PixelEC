@@ -25,5 +25,6 @@
 		"src/routes/(dashboard)/dashboard/products/+layout.js",
 		"src/routes/(dashboard)/dashboard/products/+layout.js"
 	],
-	"/(dashboard)/dashboard/settings": []
+	"/(dashboard)/dashboard/settings": [],
+	"/(home)/products": []
 }
