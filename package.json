@@ -1,0 +1,11 @@
+{
+  "name": "svelte-ecom",
+  "version": "1.0.0",
+  "description": "**A Modular, Scalable Backend for Modern Ecommerce Applications**   **NOT YET USABLE - STILL IN HEAVY DEVELOPMENT | API DOCs not ready yet** *Built with Node.js, Express, SvelteKit & Sequelize & MariaDB | Fully Open Source & Free to Use*",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
