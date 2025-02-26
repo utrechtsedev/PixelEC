@@ -1,6 +1,7 @@
 # PixelEC
-
-![PixelEC Logo](https://github.com/utrechtsedev/PixelEC/blob/main/frontend/static/logo.png?raw=true)
+<p align="center">
+  <img src="https://github.com/utrechtsedev/PixelEC/blob/main/frontend/static/logo.png?raw=true" alt="Description" width="300">
+</p>
 
 > An open-source, lightweight e-commerce platform with a powerful admin dashboard and analytics
 
