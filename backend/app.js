@@ -47,12 +47,14 @@ const userRoutes = require('./routes/users.routes.js');
 // Admin routes
 const adminCategoryRoutes = require('./routes/admin/categories.routes.js'); 
 const adminProductRoutes = require('./routes/admin/products.routes.js');
+const adminSettingsPage = require('./routes/admin/settings.routes.js');
 const adminBrandRoutes = require('./routes/admin/brands.routes.js');
 const adminUserRoutes = require('./routes/admin/users.routes.js');
 
 // Mounted routes
 app.use('/api/categories', categoryRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/settings', adminSettingsPage);
 app.use('/api/refunds', refundRoutes);
 app.use('/api/brands', brandRoutes);
 app.use('/api/orders', orderRoutes);

@@ -18,8 +18,10 @@ const AuditLog = require('./auditLog.model');
 const OrderAddress = require('./orderAddress.model');
 const Cart = require('./cart.model');
 const CartItem = require('./cartItem.model')
+const StorefrontSettings  = require('./storefrontSettings.model')
 
 const models = {
+  StorefrontSettings,
   Brand,
   User,
   Address,

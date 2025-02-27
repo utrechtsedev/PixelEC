@@ -20,10 +20,12 @@ export const nodes = [
 	() => import('./nodes/16'),
 	() => import('./nodes/17'),
 	() => import('./nodes/18'),
-	() => import('./nodes/19')
+	() => import('./nodes/19'),
+	() => import('./nodes/20'),
+	() => import('./nodes/21')
 ];
 
-export const server_loads = [3];
+export const server_loads = [5,3];
 
 export const dictionary = {
 		"/(home)": [18,[5]],
@@ -39,7 +41,9 @@ export const dictionary = {
 		"/(dashboard)/dashboard/orders": [15,[2]],
 		"/(dashboard)/dashboard/products": [16,[2,4]],
 		"/(dashboard)/dashboard/settings": [17,[2]],
-		"/(home)/products": [19,[5]]
+		"/(home)/products": [20,[5]],
+		"/(home)/products/1": [21,[5]],
+		"/(home)/(tests)/testpage": [19,[5]]
 	};
 
 export const hooks = {
