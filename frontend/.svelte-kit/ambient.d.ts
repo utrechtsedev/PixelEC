@@ -36,6 +36,7 @@ declare module '$env/static/private' {
 	export const XDG_SESSION_TYPE: string;
 	export const GIT_ASKPASS: string;
 	export const GTK_EXE_PREFIX_VSCODE_SNAP_ORIG: string;
+	export const BUN_INSTALL: string;
 	export const npm_node_execpath: string;
 	export const GDK_BACKEND_VSCODE_SNAP_ORIG: string;
 	export const SHLVL: string;
@@ -178,6 +179,7 @@ declare module '$env/dynamic/private' {
 		XDG_SESSION_TYPE: string;
 		GIT_ASKPASS: string;
 		GTK_EXE_PREFIX_VSCODE_SNAP_ORIG: string;
+		BUN_INSTALL: string;
 		npm_node_execpath: string;
 		GDK_BACKEND_VSCODE_SNAP_ORIG: string;
 		SHLVL: string;

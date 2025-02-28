@@ -1,7 +1,7 @@
 <script>
-    import ProductCards from "$lib/frontend-components/productCards.svelte";
-    import ProductsFilter from "$lib/frontend-components/productsFilter.svelte";
-    import ProductsPageHero from "$lib/frontend-components/productsPageHero.svelte";
+    import ProductCards from "$lib/frontend-components/modern/productCards.svelte";
+    import ProductsFilter from "$lib/frontend-components/modern/productsFilter.svelte";
+    import ProductsPageHero from "$lib/frontend-components/modern/productsPageHero.svelte";
 </script>
 <ProductsPageHero />
 <ProductsFilter />
