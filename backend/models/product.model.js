@@ -1,8 +1,6 @@
 // models/Product.js
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../config/db');
-
-
 class Product extends Model {}
 Product.init({
   product_id: {
@@ -16,16 +14,16 @@ Product.init({
     unique: true
   },
   category_id: {
-    type: DataTypes.UUID, 
-    allowNull: true, 
+    type: DataTypes.UUID,
+    allowNull: true,
     references: {
       model: 'categories',
       key: 'category_id'
     }
   },
   brand_id: {
-    type: DataTypes.UUID, 
-    allowNull: true, 
+    type: DataTypes.UUID,
+    allowNull: true,
     references: {
       model: 'brands',
       key: 'brand_id'
@@ -63,11 +61,16 @@ Product.init({
   deletedAt: 'deleted_at'
 });
 Product.associate = (models) => {
-
-Product.belongsTo(models.Brand, {foreignKey: 'brand_id'});
-Product.hasMany(models.ProductVariant, { foreignKey: 'ProductProductId' });
-Product.hasMany(models.ProductImage);
-Product.belongsTo(models.Category, {as: 'Category',foreignKey: 'category_id'});
+  Product.belongsTo(models.Brand, {foreignKey: 'brand_id'});
+  // Add an alias to match what you're using in the query
+  Product.hasMany(models.ProductVariant, { 
+    as: 'ProductVariants',
+    foreignKey: 'product_id' // Use standard naming convention
+  });
+  Product.hasMany(models.ProductImage, {
+    as: 'ProductImages',
+    foreignKey: 'product_id'
+  });
+  Product.belongsTo(models.Category, {as: 'Category', foreignKey: 'category_id'});
 }
-
 module.exports = Product;

@@ -135,6 +135,7 @@ declare module '$env/static/private' {
 	export const npm_config_global_prefix: string;
 	export const npm_command: string;
 	export const MEMORY_PRESSURE_WRITE: string;
+	export const PNPM_HOME: string;
 	export const INIT_CWD: string;
 	export const EDITOR: string;
 	export const VITE_USER_NODE_ENV: string;
@@ -278,6 +279,7 @@ declare module '$env/dynamic/private' {
 		npm_config_global_prefix: string;
 		npm_command: string;
 		MEMORY_PRESSURE_WRITE: string;
+		PNPM_HOME: string;
 		INIT_CWD: string;
 		EDITOR: string;
 		VITE_USER_NODE_ENV: string;

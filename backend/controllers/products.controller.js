@@ -6,17 +6,16 @@ const { sequelize, models } = require('../models');
 exports.getProducts = async (req, res) => {
   try {
     const { category, brand } = req.query;
-
     const include = [
       {
         model: models.Category,
         as: 'Category',
         attributes: ['category_id', 'name', 'slug'],
-        where: category ? { 
+        where: category ? {
           [Op.or]: [
             { category_id: category },
             { slug: category },
-            { name: category } 
+            { name: category }
           ]
         } : undefined,
         required: !!category
@@ -24,42 +23,58 @@ exports.getProducts = async (req, res) => {
       {
         model: models.Brand,
         attributes: ['brand_id', 'name', 'slug'],
-        where: brand ? { 
+        where: brand ? {
           [Op.or]: [
             { brand_id: brand },
             { slug: brand },
-            { name: brand } 
-          ] 
+            { name: brand }
+          ]
         } : undefined,
         required: !!brand
       },
       {
         model: models.ProductVariant,
         as: 'ProductVariants',
-        // Include attributes column here
-        attributes: ['variant_id', 'sku', 'size', 'weight', 'color'], // 🟡 Added 'attributes'
-        required: false
+        attributes: ['variant_id', 'sku', 'size', 'weight', 'color'],
+        required: false,
+        include: [
+          {
+            model: models.ProductAttribute,
+            as: 'ProductAttributes',
+            attributes: ['attribute_id', 'key', 'value', 'attribute_type', 'is_filterable'],
+            required: false
+          },
+          {
+            model: models.ProductImage,
+            as: 'VariantImages', // HIER AANGEPAST: 'ProductImages' → 'VariantImages'
+            attributes: ['image_id', 'url', 'alt_text', 'is_primary'],
+            required: false
+          }
+        ]
       },
       {
         model: models.ProductImage,
         as: 'ProductImages',
-        attributes: ['image_id', 'url'],
+        attributes: ['image_id', 'url', 'alt_text', 'is_primary'],
         where: { is_primary: true },
         required: false
       }
     ];
-
+    
     const { count, rows: products } = await models.Product.findAndCountAll({
       include,
       distinct: true,
       order: [['created_at', 'DESC']]
     });
-
+    
     res.json({
       products,
-      meta: {}
+      meta: {
+        total: count
+      }
     });
   } catch (error) {
+    console.error('Error fetching products:', error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -77,7 +92,7 @@ exports.getProductById = async (req, res) => {
           include: [
             {
               model: models.ProductImage,
-              as: 'ProductImages',
+              as: 'VariantImages',
               attributes:  ['image_id', 'url', 'alt_text', 'is_primary'],
             }
           ],

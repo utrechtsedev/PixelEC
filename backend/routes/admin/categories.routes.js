@@ -1,4 +1,4 @@
-const { createCategory, deleteCategory, editCategory } = require('../../controllers/admin/categoriesController.js');
+const { createCategory, deleteCategory, editCategory } = require('../../controllers/admin/categories.controller.js');
 const express = require('express');
 const router = express.Router();
 

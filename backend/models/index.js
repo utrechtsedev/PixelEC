@@ -6,7 +6,7 @@ const Category = require('./category.model');
 const User = require('./user.model');
 const Address = require('./address.model');
 const Product = require('./product.model');
-const ProductVariant = require('./productVariant.model');
+const ProductVariant = require('./productVariants.model');
 const Order = require('./order.model');
 const OrderItem = require('./orderItem.model');
 const Payment = require('./payment.model');
@@ -19,8 +19,10 @@ const OrderAddress = require('./orderAddress.model');
 const Cart = require('./cart.model');
 const CartItem = require('./cartItem.model')
 const StorefrontSettings  = require('./storefrontSettings.model')
+const ProductAttribute = require('./productAttributes.model')
 
 const models = {
+  ProductAttribute,
   StorefrontSettings,
   Brand,
   User,

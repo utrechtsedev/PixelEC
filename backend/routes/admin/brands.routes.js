@@ -1,5 +1,5 @@
 const express = require('express');
-const { createBrand, deleteBrand, editBrand } = require('../../controllers/admin/brandsController');
+const { createBrand, deleteBrand, editBrand } = require('../../controllers/admin/brands.controller');
 const router = express.Router();
 
 // create brand
