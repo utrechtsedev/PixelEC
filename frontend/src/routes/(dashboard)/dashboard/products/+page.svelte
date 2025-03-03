@@ -13,7 +13,7 @@
   
   {#if !data.success}
     <div class="alert alert-error">
-      <p>Er is een fout opgetreden: {data.error}</p>
+      <p>An error occured: {data.error}</p>
     </div>
   {:else}
     <ProductsTable products={data.products} />

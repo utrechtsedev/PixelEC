@@ -10,9 +10,9 @@
     
     const handleEdit = async () => {
   if (selectedProducts.size > 1)
-    return alert("Je kunt maar 1 product tegelijk bewerken");
+    return alert("You can only edit one product at a time");
   if (selectedProducts.size === 0)
-    return alert("Selecteer een product om te bewerken");
+    return alert("Select a product to edit");
   
   // Haal de product_id op uit de selectedProducts Set
   const productId = Array.from(selectedProducts)[0];
@@ -21,7 +21,7 @@
   const selectedProduct = products.find(p => p.product_id === productId);
   
   if (!selectedProduct) {
-    return alert("Geselecteerd product kon niet worden gevonden");
+    return alert("Selected product could not be found");
   }
   
   // Gebruik public_id voor de URL
@@ -58,7 +58,7 @@
     const handleDelete = async () => {
         if (selectedProducts.size === 0) return;
 
-        if (!confirm(`Weet je zeker dat je ${selectedProducts.size} product(en) wilt verwijderen?`)) {
+        if (!confirm(`Are you sure you want to delete ${selectedProducts.size} products?`)) {
             return;
         }
 
@@ -67,8 +67,12 @@
         try {
             // Create array of delete promises
             const deletePromises = ids.map(async (id) =>
-                await fetch(`/api/products/${id}`, {
+                await fetch(`/api/admin/products`, {
                     method: "DELETE",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({id: id})
                 })
             );
             
@@ -80,10 +84,10 @@
             );
             
             selectedProducts = new Set();
-            alert("Producten succesvol verwijderd!");
+            alert("Products succesfully deleted!");
         } catch (error) {
             console.error("Delete error:", error);
-            alert("Fout bij het verwijderen van producten.");
+            alert("An error occurred while deleting products.");
         }
     };
     
@@ -99,24 +103,54 @@
     // Helper functie om datum te formatteren
     const formatDate = (dateString) => {
         if (!dateString) return "";
-        return new Date(dateString).toLocaleDateString("nl-NL", {
+        return new Date(dateString).toLocaleDateString("en-US", {
             year: "numeric",
             month: "short",
             day: "numeric",
         });
     };
+
+    // Helper functie om de totale voorraad per product te berekenen
+    const calculateTotalStock = (product) => {
+        if (!product.ProductVariants || product.ProductVariants.length === 0) {
+            return 0;
+        }
+        
+        return product.ProductVariants.reduce((total, variant) => {
+            // inventory_quantity kan undefined zijn, dus voeg een fallback toe
+            const variantStock = variant.inventory_quantity || 0;
+            return total + variantStock;
+        }, 0);
+    };
+
+    // Helper functie om voorraad te formatteren met context
+    const formatStock = (product) => {
+        const totalStock = calculateTotalStock(product);
+        const variantCount = product.ProductVariants ? product.ProductVariants.length : 0;
+        
+        if (variantCount === 0) {
+            return "No stock";
+        }
+        
+        if (variantCount === 1) {
+            return `${totalStock} items`;
+        }
+        
+        // Als er meerdere varianten zijn, toon een overzicht
+        return `${totalStock} items`;
+    };
 </script>
 
 <div class="p-4 bg-base-300 rounded-lg shadow-md">
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
-        <h2 class="text-2xl md:text-4xl font-bold shrink-0">Producten</h2>
+        <h2 class="text-2xl md:text-4xl font-bold shrink-0">Products</h2>
         
         <div class="w-full sm:w-auto flex flex-col xs:flex-row gap-2 items-stretch">
             <!-- Search Input -->
             <div class="flex-grow min-w-0">
                 <input
                     type="text"
-                    placeholder="Zoeken..."
+                    placeholder="Search..."
                     class="input input-bordered w-full h-8 text-sm"
                     bind:value={searchTerm}
                 />
@@ -126,12 +160,12 @@
             <div class="flex gap-1 justify-end flex-wrap">
                 <button class="btn btn-sm flex-shrink-0" on:click={() => window.location = "/dashboard/products/create"}>
                     <span class="md:hidden">➕</span>
-                    <span class="hidden md:inline">Nieuw</span>
+                    <span class="hidden md:inline">Create New</span>
                 </button>
     
                 <button class="btn btn-sm flex-shrink-0" on:click={handleEdit}>
                     <span class="md:hidden">✏️</span>
-                    <span class="hidden md:inline">Bewerken</span>
+                    <span class="hidden md:inline">Edit</span>
                 </button>
     
                 <button
@@ -140,7 +174,7 @@
                     on:click={handleDelete}
                 >
                     <span class="md:hidden">🗑️<span class="ml-1">{selectedProducts.size}</span></span>
-                    <span class="hidden md:inline">Verwijderen ({selectedProducts.size})</span>
+                    <span class="hidden md:inline">Delete ({selectedProducts.size})</span>
                 </button>
             </div>
         </div>
@@ -148,7 +182,7 @@
 
     {#if products.length === 0}
         <div class="bg-base-100 p-8 text-center rounded-lg">
-            <p>Geen producten gevonden.</p>
+            <p>No products found.</p>
         </div>
     {:else}
         <div class="overflow-x-auto bg-base-100 rounded-lg">
@@ -165,11 +199,13 @@
                                 />
                             </label>
                         </th>
-                        <th>Naam</th>
-                        <th>Beschrijving</th>
-                        <th>Prijs</th>
-                        <th>Voorraad</th>
-                        <th>Datum</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Variants</th>
+                        <th>In Stock</th>
+                        <th>Date</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -196,9 +232,18 @@
                             <td>{formatPrice(product.base_price)}</td>
                             <td>
                                 {#if product.ProductVariants && product.ProductVariants.length}
-                                    <span class="badge badge-success">{product.ProductVariants.length} varianten</span>
+                                    <span class="badge badge-success">{product.ProductVariants.length} variants</span>
                                 {:else}
-                                    <span class="badge badge-ghost">Geen varianten</span>
+                                    <span class="badge badge-ghost">No variants</span>
+                                {/if}
+                            </td>
+                            <td>
+                                {#if product.ProductVariants && product.ProductVariants.length > 0}
+                                    <span class="badge {calculateTotalStock(product) > 0 ? 'badge-success' : 'badge-error'}">
+                                        {formatStock(product)}
+                                    </span>
+                                {:else}
+                                    <span class="badge badge-ghost">No stock</span>
                                 {/if}
                             </td>
                             <td>{formatDate(product.created_at)}</td>

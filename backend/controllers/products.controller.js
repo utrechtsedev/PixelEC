@@ -35,7 +35,7 @@ exports.getProducts = async (req, res) => {
       {
         model: models.ProductVariant,
         as: 'ProductVariants',
-        attributes: ['variant_id', 'sku', 'size', 'weight', 'color'],
+        attributes: ['variant_id', 'sku', 'price_override', 'inventory_quantity', 'size', 'weight', 'color'],
         required: false,
         include: [
           {
@@ -47,7 +47,7 @@ exports.getProducts = async (req, res) => {
           {
             model: models.ProductImage,
             as: 'VariantImages', // HIER AANGEPAST: 'ProductImages' → 'VariantImages'
-            attributes: ['image_id', 'url', 'alt_text', 'is_primary'],
+            attributes: ['image_id', 'url', 'alt_text', 'is_primary', 'sort_order'],
             required: false
           }
         ]
@@ -55,9 +55,7 @@ exports.getProducts = async (req, res) => {
       {
         model: models.ProductImage,
         as: 'ProductImages',
-        attributes: ['image_id', 'url', 'alt_text', 'is_primary'],
-        where: { is_primary: true },
-        required: false
+        attributes: ['image_id', 'url', 'alt_text', 'is_primary', 'sort_order'],
       }
     ];
     
@@ -88,19 +86,19 @@ exports.getProductById = async (req, res) => {
         {
           model: models.ProductVariant,
           as: 'ProductVariants',
-          attributes: ['variant_id', 'sku'],
+          attributes: ['variant_id', 'sku', 'price_override', 'inventory_quantity', 'size', 'weight', 'color'],
           include: [
             {
               model: models.ProductImage,
               as: 'VariantImages',
-              attributes:  ['image_id', 'url', 'alt_text', 'is_primary'],
+              attributes: ['image_id', 'url', 'alt_text', 'is_primary', 'sort_order'],
             }
           ],
         },
         {
           model: models.ProductImage,
           as: 'ProductImages',
-          attributes: ['image_id', 'url']
+          attributes: ['image_id', 'url', 'alt_text', 'is_primary', 'sort_order'],
         }
       ]
     });

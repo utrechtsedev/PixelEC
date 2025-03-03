@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {createProduct, createVariant, editVariant, deleteProduct, editProduct, deleteVariant, createProductImage, deleteProductImage} = require('../../controllers/admin/products.controller');
+const {createProduct, createVariant, editVariant, deleteProduct, editProduct, deleteVariant, createProductImage, deleteProductImage, editProductImage} = require('../../controllers/admin/products.controller');
 const upload = require('../../middlewares/multer');
 
 // create product
@@ -16,9 +16,11 @@ router.put('/variants', (req, res) => editVariant(req, res));
 // edit product variant
 router.delete('/variants', (req, res) => deleteVariant(req, res));
 // add image to product
-router.post('/images', (req, res) => createProductImage(req, res));
+router.post('/images', upload.single('image'), createProductImage);
 // delete product image
 router.delete('/images', (req, res) => deleteProductImage(req, res));
+// edit product image
+router.put('/images', (req, res) => editProductImage(req, res))
 
 
 module.exports = router;
