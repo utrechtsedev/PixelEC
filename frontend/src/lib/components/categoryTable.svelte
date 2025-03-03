@@ -1,10 +1,9 @@
 <script>
     import { onMount } from "svelte";
-    import { tableVisibility } from "../../stores/object.js";
     import { slide } from "svelte/transition";
     export let data = [];
 
-    let categories = data;
+    $: categories = data;
     let selectedCategories = new Set();
     let expanded = {};
     let searchTerm = "";
@@ -121,6 +120,7 @@
             alert("Failed to delete some or all categories.");
         }
     };
+    
 </script>
 
 <div class="p-4 bg-base-300 rounded-lg shadow-md">

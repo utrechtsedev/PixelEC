@@ -20,11 +20,13 @@ const Cart = require('./cart.model');
 const CartItem = require('./cartItem.model')
 const StorefrontSettings  = require('./storefrontSettings.model')
 const ProductAttribute = require('./productAttributes.model')
+const CategoryImage = require('./categoryImage.model')
 
 const models = {
   ProductAttribute,
   StorefrontSettings,
   Brand,
+  CategoryImage,
   User,
   Address,
   Category,

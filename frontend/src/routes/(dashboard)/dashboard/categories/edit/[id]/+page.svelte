@@ -46,10 +46,11 @@
     const saveDetails = async () => {
         try {
 
-            const response = await fetch(`/api/categories/${page.params.id}`, {
+            const response = await fetch(`/api/admin/categories`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
+                    id: edittingCategory.category_id,
                     name: edittingCategory.name,
                     description: content,
                     parent_id: parentCategoryId

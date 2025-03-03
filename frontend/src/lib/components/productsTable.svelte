@@ -1,3 +1,4 @@
+<!-- /components/ProductsTable.svelte -->
 <script>
     import { onMount } from "svelte";
     import { slide } from "svelte/transition";

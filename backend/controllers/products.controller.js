@@ -89,6 +89,12 @@ exports.getProductById = async (req, res) => {
           attributes: ['variant_id', 'sku', 'price_override', 'inventory_quantity', 'size', 'weight', 'color'],
           include: [
             {
+              model: models.ProductAttribute,
+              as: 'ProductAttributes',
+              attributes: ['attribute_id', 'key', 'value', 'attribute_type', 'is_filterable'],
+              required: false
+            },
+            {
               model: models.ProductImage,
               as: 'VariantImages',
               attributes: ['image_id', 'url', 'alt_text', 'is_primary', 'sort_order'],

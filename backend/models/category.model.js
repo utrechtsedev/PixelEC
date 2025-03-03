@@ -29,6 +29,10 @@ Category.init({
   visible: {
     type: DataTypes.ENUM('visible', 'invisible', 'unlisted'),
     defaultValue: 'visible'
+  },
+  parent_id: {
+    type: DataTypes.UUID,
+    allowNull: true,
   }
 }, {
   sequelize,
@@ -40,9 +44,13 @@ Category.init({
   deletedAt: 'deleted_at'
 });
 Category.associate = (models) => {
-  Category.belongsTo(models.Category, { as: 'Parent', foreignKey: 'parent_category_id' });
-  Category.hasMany(models.Category, { as: 'Children', foreignKey: 'parent_category_id' });
+  Category.belongsTo(models.Category, { as: 'Parent', foreignKey: 'parent_id' });
+  Category.hasMany(models.Category, { as: 'Children', foreignKey: 'parent_id' });
   Category.hasMany(models.Product, {   as: 'Products', foreignKey: 'category_id'});
+  Category.hasMany(models.CategoryImage, {
+    as: 'CategoryImages',
+    foreignKey: 'category_id'
+  });
 };
 
 

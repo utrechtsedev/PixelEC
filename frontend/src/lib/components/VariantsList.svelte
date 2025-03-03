@@ -1,3 +1,4 @@
+<!-- /components/VariantsList.svelte -->
 <script>
   import { onMount } from 'svelte';
   import VariantForm from './VariantForm.svelte';
@@ -38,25 +39,37 @@
     editingVariantId = null;
   };
   
-  // Functie om te bevestigen dat een variant is opgeslagen
+  // Functie om te bevestigen dat een variant is opgeslagen HIER
   const handleVariantSaved = async (event) => {
-    const savedVariant = event.detail;
-    
-    // Ververs de lijst met varianten - met de juiste endpoint
-    try {
-      const res = await fetch(`/api/products/${productId}`);
-      if (res.ok) {
-        const productData = await res.json();
-        variants = productData.ProductVariants || [];
+  const savedVariant = event.detail;
+  
+  // Ververs de lijst met varianten - met de juiste endpoint
+  try {
+    const res = await fetch(`/api/products/${productId}`);
+    if (res.ok) {
+      const responseData = await res.json();
+      // Check of we een array van producten hebben of een enkel product
+      if (responseData.products && Array.isArray(responseData.products)) {
+        // Vind het product met de juiste ID
+        const product = responseData.products.find(p => 
+          p.public_id.toString() === productId.toString()
+        );
+        if (product) {
+          variants = product.ProductVariants || [];
+          console.log("Updated variants with attributes:", variants);
+        }
+      } else {
+        // Als het een enkel product is
+        variants = responseData.ProductVariants || [];
       }
-    } catch (error) {
-      console.error('Error refreshing variants:', error);
     }
-    
-    // Reset de bewerkingsmodus
-    isAddingVariant = false;
-    editingVariantId = null;
-  };
+  } catch (error) {
+    console.error('Error refreshing variants:', error);
+  }
+  
+  isAddingVariant = false;
+  editingVariantId = null;
+};
   
   // Functie om een variant te verwijderen
   const confirmDeleteVariant = (variant) => {
@@ -99,7 +112,7 @@
     if (!price && price !== 0) return "N/A";
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'EUR'
+      currency: 'USD'
     }).format(price);
   };
 </script>

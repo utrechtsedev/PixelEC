@@ -35,7 +35,7 @@
     variant_id: variant?.variant_id || '',
     key: '',
     value: '',
-    display_order: 0,
+    display_order: '',
     is_filterable: false,
     attribute_type: 'feature'
   };
@@ -134,7 +134,7 @@
       variant_id: variant?.variant_id || '',
       key: '',
       value: '',
-      display_order: 0,
+      display_order: '0',
       is_filterable: false,
       attribute_type: 'feature'
     };
@@ -239,27 +239,35 @@
   };
   
   const deleteAttribute = async (attribute) => {
-    try {
-      const response = await fetch('/api/admin/attributes', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ id: attribute.attribute_id })
-      });
-      
-      if (!response.ok) {
-        throw new Error(`Fout bij verwijderen: ${response.status} ${response.statusText}`);
-      }
-      
-      // Verwijder uit attributenlijst
-      attributes = attributes.filter(a => a.attribute_id !== attribute.attribute_id);
-      deleteConfirmation = null;
-    } catch (error) {
-      console.error('Error deleting attribute:', error);
-      alert(`Fout bij verwijderen: ${error.message}`);
+  try {
+    const response = await fetch('/api/admin/attributes', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ id: attribute.attribute_id })
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Fout bij verwijderen: ${response.status} ${response.statusText}`);
     }
-  };
+    
+    // Update lokale attributes array
+    attributes = attributes.filter(a => a.attribute_id !== attribute.attribute_id);
+    
+    // Update ook de ProductAttributes van het variant object
+    if (variant && variant.ProductAttributes) {
+      variant.ProductAttributes = variant.ProductAttributes.filter(
+        a => a.attribute_id !== attribute.attribute_id
+      );
+    }
+    
+    deleteConfirmation = null;
+  } catch (error) {
+    console.error('Error deleting attribute:', error);
+    alert(`Fout bij verwijderen: ${error.message}`);
+  }
+};
   
   // Hulpfunctie om attribuuttypes gebruiksvriendelijk weer te geven
   const formatAttributeType = (type) => {
@@ -271,6 +279,12 @@
     };
     return types[type] || type;
   };
+  $: {
+  if (variant && variant.ProductAttributes) {
+    attributes = variant.ProductAttributes;
+    console.log('Attributes updated from variant:', attributes);
+  }
+}
 </script>
 
 <form on:submit|preventDefault={handleSubmit} class="space-y-4">
@@ -301,7 +315,7 @@
     <!-- Prijs override -->
     <div class="form-control">
       <label class="label" for="price_override">
-        <span class="label-text">Price override (€)</span>
+        <span class="label-text">Price override ($)</span>
         <span class="label-text-alt">Leave empty for base price</span>
       </label>
       <input 
@@ -426,10 +440,10 @@
             <tr>
               <th>Type</th>
               <th>Key</th>
-              <th>Waarde</th>
-              <th>Volgorde</th>
-              <th>Filterbaar</th>
-              <th>Acties</th>
+              <th>Value</th>
+              <th>Order</th>
+              <th>Filterable</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -542,7 +556,7 @@
           <span class="label-text">Display order</span>
         </label>
         <input 
-          type="number" 
+          type="text" 
           id="display_order" 
           class="input input-bordered w-full" 
           bind:value={attributeFormData.display_order} 

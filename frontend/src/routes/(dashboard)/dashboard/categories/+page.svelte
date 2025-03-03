@@ -1,6 +1,8 @@
+<!-- /categories/+page.svelte -->
 <script>
     import CategoryTable from "$lib/components/categoryTable.svelte";
     export let data;
+    console.log('Page data:', data);
 </script>
 <a href="/dashboard" class="flex items-center gap-2 mb-2">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" {...$$props}>
@@ -8,5 +10,6 @@
     </svg>
     <p class="text-2xl">Dashboard</p>
 </a>
+
 <CategoryTable data={data.data} />
 

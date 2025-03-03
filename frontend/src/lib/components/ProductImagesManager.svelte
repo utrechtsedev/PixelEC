@@ -512,7 +512,7 @@ const setPrimaryImage = async (image, isProduct = true) => {
                   </div>
                   
                   <!-- Order info (for debugging) -->
-                  <div class="badge badge-outline">#{image.sort_order}</div>
+                  <div class="badge badge-outline">#{image.sort_order+1}</div>
                   
                   <!-- Acties -->
                   <div class="flex gap-1">
@@ -605,7 +605,7 @@ const setPrimaryImage = async (image, isProduct = true) => {
                       </div>
                       
                       <!-- Order info (for debugging) -->
-                      <div class="badge badge-outline">#{image.sort_order}</div>
+                      <div class="badge badge-outline">#{image.sort_order+1}</div>
                       
                       <!-- Acties -->
                       <div class="flex gap-1">

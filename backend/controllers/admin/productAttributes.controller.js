@@ -2,6 +2,7 @@ const { models } = require("../../models")
 
 exports.createAttribute = async (req,res) => {
     try {
+        console.log(req.body)
         const {variant_id, key, value, display_order, is_filterable, attribute_type} = req.body
         const attribute = await models.ProductAttribute.create(
             {
@@ -29,6 +30,7 @@ exports.editAttribute = async (req,res) => {
 
 exports.deleteAttribute = async (req, res) => {
     try {
+        console.log(req)
         const attribute = await models.ProductAttribute.destroy({where: {attribute_id: req.body.id}});
             res.status(200).json({message: "Attribute deleted succesfully"});
     } catch (error) {

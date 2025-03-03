@@ -10,5 +10,4 @@ router.get('/', (req, res) => getCategories(req, res));
 router.get('/:id', (req, res) => getCategoryById(req, res));
 
 
-
 module.exports = router;
