@@ -1,4 +1,4 @@
-# PixelEC
+# PixelEC (not yet in prod)
 <p align="center">
   <img src="https://github.com/utrechtsedev/PixelEC/blob/main/frontend/static/logo.png?raw=true" alt="Description" width="300">
 </p>
