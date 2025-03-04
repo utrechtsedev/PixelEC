@@ -69,9 +69,11 @@ const handleError = (res, error, operation) => {
  */
 const handleSuccess = (res, data = null, message = 'Settings updated successfully') => {
   return res.status(200).json({
-    success: true,
-    message,
-    data
+    data,
+    meta: {
+      success: true,
+      message,
+    }
   });
 };
 
