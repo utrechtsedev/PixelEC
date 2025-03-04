@@ -7,6 +7,7 @@ export const load = async ({ fetch }) => {
       const formattedData = apiData.map(item => ({
         category_id: item.category_id,
         name: item.name,
+        public_id: item.public_id,
         description: item.description || '',
         parent_id: item.parent_id,
         created_at: item.created_at,

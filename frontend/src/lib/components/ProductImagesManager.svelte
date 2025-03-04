@@ -350,12 +350,12 @@ const setPrimaryImage = async (image, isProduct = true) => {
 </script>
 
 <div class="bg-base-200 p-6 rounded-lg">
-  <h2 class="text-2xl font-bold mb-4">Productafbeeldingen</h2>
+  <h2 class="text-2xl font-bold mb-4">Product Images</h2>
   
   <!-- Upload form -->
   <div class="card bg-base-100 shadow-md mb-6">
     <div class="card-body">
-      <h3 class="card-title">Nieuwe afbeelding uploaden</h3>
+      <h3 class="card-title">Upload a new image</h3>
       
       {#if error}
         <div class="alert alert-error mt-2 mb-4">
@@ -377,19 +377,19 @@ const setPrimaryImage = async (image, isProduct = true) => {
       
       <div class="form-control w-full mb-4">
         <label class="label">
-          <span class="label-text font-medium">Toevoegen aan</span>
+          <span class="label-text font-medium">Add to</span>
         </label>
         <select 
           class="select select-bordered w-full"
           bind:value={uploadVariantId}
         >
-          <option value={null}>Hoofdproduct</option>
+          <option value={null}>Main product</option>
           {#if product.ProductVariants && product.ProductVariants.length > 0}
-            <optgroup label="Varianten">
+            <optgroup label="Variants">
               {#each product.ProductVariants as variant}
                 <option value={variant.variant_id}>
-                  {variant.sku} - {variant.size ? `Maat: ${variant.size}` : ''} 
-                  {variant.color ? `Kleur: ${variant.color}` : ''}
+                  {variant.sku} - {variant.size ? `Size: ${variant.size}` : ''} 
+                  {variant.color ? `Color: ${variant.color}` : ''}
                 </option>
               {/each}
             </optgroup>
@@ -399,7 +399,7 @@ const setPrimaryImage = async (image, isProduct = true) => {
       
       <div class="form-control w-full mb-4">
         <label class="label">
-          <span class="label-text font-medium">Afbeelding</span>
+          <span class="label-text font-medium">Image</span>
         </label>
         <input 
           type="file" 
@@ -412,19 +412,19 @@ const setPrimaryImage = async (image, isProduct = true) => {
       
       {#if previewUrl}
         <div class="mb-4">
-          <p class="font-medium mb-2">Voorbeeld:</p>
+          <p class="font-medium mb-2">Example:</p>
           <img src={previewUrl} alt="Preview" class="max-h-40 rounded-md shadow-sm" />
         </div>
       {/if}
       
       <div class="form-control w-full mb-4">
         <label class="label">
-          <span class="label-text font-medium">Alt tekst</span>
+          <span class="label-text font-medium">Alt text</span>
         </label>
         <input 
           type="text" 
           bind:value={formData.alt_text} 
-          placeholder="Beschrijving van de afbeelding"
+          placeholder="Description of the image"
           class="input input-bordered w-full" 
         />
       </div>
@@ -436,7 +436,7 @@ const setPrimaryImage = async (image, isProduct = true) => {
             bind:checked={formData.is_primary} 
             class="checkbox" 
           />
-          <span class="label-text">Gebruiken als hoofdafbeelding</span>
+          <span class="label-text">Use as primary image</span>
         </label>
       </div>
       
@@ -449,7 +449,7 @@ const setPrimaryImage = async (image, isProduct = true) => {
           {#if uploadingImage}
             <span class="loading loading-spinner loading-sm"></span>
           {/if}
-          Uploaden
+          Upload
         </button>
       </div>
     </div>
@@ -458,15 +458,15 @@ const setPrimaryImage = async (image, isProduct = true) => {
   <!-- Product Images -->
   <div class="card bg-base-100 shadow-md mb-6">
     <div class="card-body">
-      <h3 class="card-title">Productafbeeldingen</h3>
+      <h3 class="card-title">Product Images</h3>
       
       <div class="mt-2 mb-3 text-sm text-base-content/70">
-        <p>Gebruik de pijltjes om de volgorde van de afbeeldingen aan te passen.</p>
+        <p>Use the arrows to change the order of the images.</p>
       </div>
       
       {#if !product.ProductImages || product.ProductImages.length === 0}
         <div class="p-4 text-center text-base-content/60">
-          Geen afbeeldingen voor dit product
+          No images for this product
         </div>
       {:else}
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -489,6 +489,7 @@ const setPrimaryImage = async (image, isProduct = true) => {
                 <div class="flex items-center justify-between gap-2 mt-3 mb-1">
                   <!-- Positie verplaats knoppen -->
                   <div class="flex gap-1">
+                    <!-- svelte-ignore a11y_consider_explicit_label -->
                     <button 
                       class="btn btn-xs btn-circle" 
                       disabled={index === 0 || updatingOrder}
@@ -499,6 +500,7 @@ const setPrimaryImage = async (image, isProduct = true) => {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                       </svg>
                     </button>
+                    <!-- svelte-ignore a11y_consider_explicit_label -->
                     <button 
                       class="btn btn-xs btn-circle" 
                       disabled={index === product.ProductImages.length - 1 || updatingOrder}
@@ -517,6 +519,7 @@ const setPrimaryImage = async (image, isProduct = true) => {
                   <!-- Acties -->
                   <div class="flex gap-1">
                     {#if !image.is_primary}
+                      <!-- svelte-ignore a11y_consider_explicit_label -->
                       <button 
                         class="btn btn-xs btn-outline btn-primary"
                         on:click={() => setPrimaryImage(image, true)}
@@ -527,6 +530,7 @@ const setPrimaryImage = async (image, isProduct = true) => {
                         </svg>
                       </button>
                     {/if}
+                    <!-- svelte-ignore a11y_consider_explicit_label -->
                     <button 
                       class="btn btn-xs btn-error"
                       on:click={() => deleteImage(image.image_id)}
@@ -553,13 +557,13 @@ const setPrimaryImage = async (image, isProduct = true) => {
         <div class="card bg-base-100 shadow-md mb-6">
           <div class="card-body">
             <h3 class="card-title">
-              Afbeeldingen voor variant: {variant.sku}
-              {#if variant.size} - Maat: {variant.size}{/if}
-              {#if variant.color} - Kleur: {variant.color}{/if}
+              Images for variant: {variant.sku}
+              {#if variant.size} - Size: {variant.size}{/if}
+              {#if variant.color} - Color: {variant.color}{/if}
             </h3>
             
             <div class="mt-2 mb-3 text-sm text-base-content/70">
-              <p>Gebruik de pijltjes om de volgorde van de afbeeldingen aan te passen.</p>
+              <p>Use the arrows to change the order of the images.</p>
             </div>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -575,7 +579,7 @@ const setPrimaryImage = async (image, isProduct = true) => {
                   </figure>
                   <div class="card-body p-4">
                     {#if image.is_primary}
-                      <div class="badge badge-primary mb-2">Hoofdafbeelding</div>
+                      <div class="badge badge-primary mb-2">Main image</div>
                     {/if}
                     <p class="text-sm truncate" title={image.alt_text}>{image.alt_text}</p>
                     
@@ -667,7 +671,7 @@ const setPrimaryImage = async (image, isProduct = true) => {
     <div class="fixed bottom-4 right-4 bg-primary text-white p-2 rounded-lg shadow-lg">
       <span class="flex items-center">
         <span class="loading loading-spinner loading-sm mr-2"></span>
-        Volgorde bijwerken...
+        Changing order...
       </span>
     </div>
   {/if}
