@@ -186,6 +186,15 @@ await models.StorefrontSettings.bulkCreate([
     category: "general",
     is_active: true,
   },
+  {
+    setting_key: "storefront_hero", 
+    setting_value: "modern",
+    value_type: "string",
+    display_name: "Store Theme", 
+    category: "layout",
+    description: "This entry keeps your theme",
+    is_active: true,
+  },
 ])
   })
   .catch((err) => {

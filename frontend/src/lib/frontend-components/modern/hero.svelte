@@ -1,3 +1,8 @@
+<script>
+    export let data;
+    const settings = data;
+</script>
+
 <div class="flex justify-center items-center w-screen h-[80vh] bg-[url('//new-ella-demo.myshopify.com/cdn/shop/files/h7j1-image-banner-1.jpg')] bg-center bg-cover bg-no-repeat">
     <div class="text-center">
         <p class="underline ">NEW ARRIVALS</p>

@@ -12,27 +12,27 @@
     import ClassicFooter from "$lib/frontend-components/classic/footer.svelte";
 
     export let data;
+    const settings = data.siteSettings.data;
+    const theme = settings.storefront_theme.value || "modern";
 
-    console.log(data)
-let a = "modern";
 
 </script>
 
 
 <!-- Modern Components (default) -->
 
-{#if a === "modern"}
+{#if theme === "modern"}
 <ModernNavbar>
     <slot />
 </ModernNavbar>
 <ModernFooter />
 {/if}
-{#if a === "minimal"}
+{#if theme === "minimal"}
     <!-- Minimalist Components -->
     <MinimalistNavBar />
     <slot />
 {/if}
-{#if a === "classic"}
+{#if theme === "classic"}
     <!-- Classic Components -->
     <ClassicNavBar />
     <slot />

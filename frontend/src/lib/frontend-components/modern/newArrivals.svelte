@@ -1,10 +1,10 @@
 <script>
     import { onMount } from "svelte";
-    import { slide } from "svelte/transition";
-
+    export let data;
     let currentPage = 0;
     let itemsPerPage = 5; // Default for large screens
     let totalPages = 1;
+console.log(data)
 
     const products = [
         { id: 1, name: "Rings", price: "$199", image: "//new-ella-demo.myshopify.com/cdn/shop/files/brand-slider-1.jpg?v=1686192818" },
@@ -55,18 +55,36 @@
             class="flex transition-transform duration-300 ease-in-out gap-3 md:mx-0 mx-3"
             style={`transform: translateX(-${currentPage * 100}%)`}
         >
-        {#each products as product (product.id)}
+        {#each data as product}
+        <!-- Get primary image and lowest sort_order image -->
+        {@const primaryImage = product.ProductImages.find(img => img.is_primary === true) || product.ProductImages[0]}
+        {@const sortedImages = [...product.ProductImages].sort((a, b) => a.sort_order - b.sort_order)}
+        {@const secondaryImage = sortedImages.find(img => img !== primaryImage) || primaryImage}
+        
         <div class="flex-shrink-0 w-1/2 sm:w-1/3 lg:w-1/5 bg-base-100 group">
-          <figure class="w-full h-[175px] md:h-[250px] lg:h-[300px] xl:h-[325px]"> <!-- Set a height here -->
-            <div class="w-full h-full flex items-end group" style="background-image: url('{product.image}'); background-size: cover; background-position: center;">
-            <button class="w-full bg-secondary py-3 opacity-0 translate-y-full group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-in-out">
-              ADD TO CART
-            </button>
-          </div>
+          <figure class="w-full h-[175px] md:h-[250px] lg:h-[300px] xl:h-[325px] relative overflow-hidden">
+            <!-- Primary image (always visible) -->
+            <div 
+              class="w-full h-full absolute inset-0"
+              style="background-image: url('{primaryImage.url}'); background-size: cover; background-position: center;"
+            ></div>
+            
+            <!-- Secondary image (fades in on hover) -->
+            <div 
+              class="w-full h-full absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              style="background-image: url('{secondaryImage.url}'); background-size: cover; background-position: center;"
+            ></div>
+            
+            <!-- Add to cart button -->
+            <div class="w-full h-full flex items-end">
+              <button class="w-full bg-secondary py-3 opacity-0 translate-y-full group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-in-out">
+                ADD TO CART
+              </button>
+            </div>
           </figure>
           <div class="items-center gap-[0px] flex flex-col">
             <h3 class="card-title text-lg group-hover:underline group-hover:text-info">{product.name}</h3>
-            <p class="text-lg">{product.price}</p>
+            <p class="text-lg">${product.base_price}</p>
           </div>
         </div>
       {/each}

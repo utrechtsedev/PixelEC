@@ -1,26 +1,41 @@
 <script>
     import { onMount } from "svelte";
+    export let data;
 
-    const categories = [
-        { id: 1, name: "Rings", image: "//new-ella-demo.myshopify.com/cdn/shop/files/brand-slider-1.jpg?v=1686192818" },
-        { id: 2, name: "Necklaces", image: "img/23-1M902055_SGP_9_b2b-c.webp" },
-        { id: 3, name: "Bracelets", image: "img/Heart-shape-gold-diamond-ring-on-transparent-background-PNG.png" },
-        { id: 4, name: "Earrings", image: "img/Silver-Bracelet-Transparent.png" },
-        { id: 5, name: "Pendants", image: "/images/pendants.jpg" },
-        { id: 6, name: "Watches", image: "/images/watches.jpg" },
-        { id: 7, name: "Brooches", image: "/images/brooches.jpg" },
-        { id: 8, name: "Necklaces", image: "/images/necklaces.jpg" },
-        { id: 9, name: "Bracelets", image: "/images/bracelets.jpg" },
-        { id: 10, name: "Earrings", image: "/images/earrings.jpg" },
-        { id: 11, name: "Pendants", image: "/images/pendants.jpg" },
-        { id: 12, name: "Watches", image: "/images/watches.jpg" },
-        { id: 13, name: "Brooches", image: "/images/brooches.jpg" },
-    ];
+    const categories = data || [];
 
-    const allCategories = [...categories, ...categories, ...categories].map((c, index) => ({
-        ...c,
-        uniqueId: index
-    }));
+
+    let a = {
+  category_id: "320f56ea-dab9-4f47-9721-44729c29351e",
+  name: "Ringen Title",
+  public_id: 3,
+  slug: "Ringen Slug",
+  description: "Dit zijn de ringen",
+  image_url: null,
+  visible: "visible",
+  parent_id: null,
+  created_at: "2025-03-04T16:54:40.000Z",
+  updated_at: "2025-03-04T16:55:03.000Z",
+  deleted_at: null,
+  CategoryImages: [
+    {
+      image_id: "2504c7fe-4d65-4c82-b3cf-75c0041b4c9d",
+      url: "/uploads/images-1741107293306.png",
+      alt_text: "aaaa",
+      is_primary: true,
+      sort_order: 0
+    },
+    {
+      image_id: "370b354a-5020-40b7-8d43-e66cd411d10b",
+      url: "/uploads/images-1741107320187.png",
+      alt_text: "aaaa",
+      is_primary: false,
+      sort_order: 1
+    }
+  ]
+}
+
+
 
     let scrollContainer;
     let virtualScroll = 0;
@@ -77,22 +92,22 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
             </button>
-            <script>
-                let scrollContainer;
-              </script>
+
               
               <div
               bind:this={scrollContainer}
               class="flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 lg:mx-0"
             >
-              {#each allCategories as category (category.uniqueId)}
+              {#each categories as category}
                 <div
+                  on:click={window.location=`/categories/${category.public_id}`}
                   class="card card-compact w-[45%] md:w-[30%] xl:w-[15%] flex-shrink-0 snap-center bg-base-100 group"
                 >
+                
                   <figure class="relative h-48 w-full overflow-hidden">
                     <img
-                      src={category.image}
-                      alt={category.name}
+                      src={category.CategoryImages.url}
+                      alt={category.CategoryImages.alt_text}
                       class="h-full w-full object-contain transition-transform duration-300 group-hover:-translate-y-2 group-hover:border-b-4 border-black"
                     />
                   </figure>
