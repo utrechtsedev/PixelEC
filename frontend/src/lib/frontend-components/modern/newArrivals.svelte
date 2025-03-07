@@ -6,14 +6,6 @@
     let totalPages = 1;
 console.log(data)
 
-    const products = [
-        { id: 1, name: "Rings", price: "$199", image: "//new-ella-demo.myshopify.com/cdn/shop/files/brand-slider-1.jpg?v=1686192818" },
-        { id: 2, name: "Necklaces", price: "$199", image: "img/23-1M902055_SGP_9_b2b-c.webp" },
-        { id: 3, name: "Bracelets", price: "$199", image: "img/Heart-shape-gold-diamond-ring-on-transparent-background-PNG.png" },
-        { id: 4, name: "Rings", price: "$199", image: "//new-ella-demo.myshopify.com/cdn/shop/files/brand-slider-1.jpg?v=1686192818" },
-        { id: 5, name: "Necklaces", price: "$199", image: "img/23-1M902055_SGP_9_b2b-c.webp" },
-    ];
-
     function updateDisplayCount() {
         if (window.innerWidth < 640) {
             itemsPerPage = 2;

@@ -52,6 +52,7 @@ const adminProductRoutes = require('./routes/admin/products.routes.js');
 const adminSettingsPage = require('./routes/admin/settings.routes.js');
 const adminBrandRoutes = require('./routes/admin/brands.routes.js');
 const adminUserRoutes = require('./routes/admin/users.routes.js');
+const StorefrontSettings = require('./models/storefrontSettings.model.js');
 
 // Mounted routes
 app.use('/api/settings', adminSettingsPage);
@@ -85,6 +86,23 @@ app.use('/api/admin/users', adminUserRoutes);
     sessionStore.sync()
     console.log('Database models have been synced!');
     
+    // StorefrontSettings.upsert(  {
+    //   setting_key: "modern_component_hero", 
+    //   setting_value: JSON.stringify({
+    //     title: "Pixelstore",
+    //     upperText: "New Arrivals",
+    //     heroImage: "",
+    //     underText: "Buy high quality stuff here.",
+    //     buttonText: "Shop now",
+    //     buttonHref: "/products"
+    //   }),
+    //   value_type: "string",
+    //   display_name: "Store Component Setting", 
+    //   category: "layout",
+    //   description: "This entry keeps your hero settings",
+    //   is_active: true,
+    // })
+
     // Start the server
     const PORT = process.env.PORT;
     app.listen(PORT, () => {

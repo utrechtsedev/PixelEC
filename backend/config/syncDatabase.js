@@ -187,12 +187,18 @@ await models.StorefrontSettings.bulkCreate([
     is_active: true,
   },
   {
-    setting_key: "storefront_hero", 
-    setting_value: "modern",
+    setting_key: "modern_component_hero", 
+    setting_value: JSON.stringify({
+      title: "Pixelstore",
+      heroImage: "",
+      underText: "Buy high quality stuff here.",
+      buttonText: "Shop now",
+      buttonHref: "/products"
+    }),
     value_type: "string",
-    display_name: "Store Theme", 
+    display_name: "Store Component Setting", 
     category: "layout",
-    description: "This entry keeps your theme",
+    description: "This entry keeps your hero settings",
     is_active: true,
   },
 ])
